@@ -760,16 +760,28 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-self: start;
 }
 
 .location-alternatives > a {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 30px;
   border: 1px solid $line;
   border-radius: 4px;
+}
+
+@media (min-width: 901px) {
+  .location-alternatives {
+    gap: 16px;
+  }
+  .location-alternatives > a {
+    min-height: 104px;
+    padding: 22px;
+    gap: 16px;
+  }
 }
 
 .location-alternatives > a:hover {

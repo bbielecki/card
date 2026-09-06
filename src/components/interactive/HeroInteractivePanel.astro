@@ -32,14 +32,22 @@ const panels = [
     items: rehabilitation.steps,
     href: "#rehabilitacja",
   },
-  ...consultations.map((item) => ({
-    id: item.id,
-    label: item.id === "telekonsultacja" ? "Telekonsultacja" : "Wizyta domowa",
-    title: item.heading,
-    description: item.description,
+  {
+    id: consultations[0].id,
+    label: consultations[0].id === "telekonsultacja" ? "Telekonsultacja" : "Wizyta domowa",
+    title: consultations[0].heading,
+    description: consultations[0].description,
     items: [],
-    href: `#${item.id}`,
-  })),
+    href: `#${consultations[0].id}`,
+  },
+  // ...consultations.map((item) => ({
+  //   id: item.id,
+  //   label: item.id === "telekonsultacja" ? "Telekonsultacja" : "Wizyta domowa",
+  //   title: item.heading,
+  //   description: item.description,
+  //   items: [],
+  //   href: `#${item.id}`,
+  // })),
   {
     id: "wspolpraca",
     label: "Współpraca",
@@ -69,28 +77,29 @@ const panels = [
 ---
 
 <section id="hero-panel" class="hero-panel" aria-label="Menu wizytówki" hidden>
-  <div class="panel-top">
-    <span class="eyebrow">{site.name}</span><button
-      class="icon-button"
-      data-panel-close
-      aria-label={site.ui.close}><Icon name="close" /></button>
-  </div>
-  <div class="panel-tabs" role="tablist" aria-label="Wybierz temat">
-    {
-      panels.map((panel, i) => (
-        <button
-          id={`tab-${panel.id}`}
-          role="tab"
-          type="button"
-          aria-selected={i === 0 ? "true" : "false"}
-          aria-controls={`panel-${panel.id}`}
-          tabindex={i === 0 ? 0 : -1}
-          data-panel-tab={panel.id}
-        >
-          {panel.label}
-        </button>
-      ))
-    }
+  <div class="hero-menu-slot">
+    <div class="hero-menu-bar">
+      <a class="brand hero-menu-brand" href="#start" aria-label={`${site.name} — początek strony`}>
+        <span class="brand-mark" aria-hidden="true">ŁW<span>+</span></span>
+      </a>
+      <div class="panel-tabs" role="tablist" aria-label="Wybierz temat">
+        {
+          panels.map((panel, i) => (
+            <button
+              id={`tab-${panel.id}`}
+              role="tab"
+              type="button"
+              aria-selected={i === 0 ? "true" : "false"}
+              aria-controls={`panel-${panel.id}`}
+              tabindex={i === 0 ? 0 : -1}
+              data-panel-tab={panel.id}
+            >
+              {panel.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
   </div>
   {
     panels.map((panel, i) => (

@@ -42,6 +42,8 @@
     "shortcutsLabel": "Odkryj, jak mogę Ci pomóc",
     "revealLabel": "Otwórz menu wizytówki",
     "scrollHint": "Przewiń w dół lub kliknij pinezkę",
+    "desktopScrollHint": "Przewiń w dół, aby poznać szczegóły",
+    "mapPinLabel": "Przejdź do mapy gabinetu",
     "shortcuts": [
       { "id": "uslugi", "label": "Czym się zajmuję", "icon": "activity" },
       { "id": "lokalizacje", "label": "Gdzie przyjmuję", "icon": "pin" },

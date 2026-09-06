@@ -3,6 +3,16 @@ import AxeBuilder from "@axe-core/playwright";
 import site from "../src/content/site.json" with { type: "json" };
 import locations from "../src/content/locations.json" with { type: "json" };
 
+// Exercise our iframe integration without depending on Google's network or UI.
+test.beforeEach(async ({ page }) => {
+  await page.route("https://www.google.com/maps**", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: '<!doctype html><html lang="pl"><head><title>Mapa gabinetu</title></head><body></body></html>',
+    })
+  );
+});
+
 for (const width of [360, 390, 430, 768, 1024, 1440]) {
   test(`strona i dostępność przy szerokości ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -10,6 +20,7 @@ for (const width of [360, 390, 430, 768, 1024, 1440]) {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/");
     await page.evaluate(() => document.fonts.ready);
+    await page.locator(".hero-portrait img").evaluate((image: HTMLImageElement) => image.decode());
     await expect(page.locator("h1")).toHaveCount(1);
     for (const id of [
       "o-mnie",
@@ -37,88 +48,6 @@ for (const width of [360, 390, 430, 768, 1024, 1440]) {
   });
 }
 
-for (const width of [390, 1440]) {
-  test("pinezka i zakładki: " + width + "px", async ({ page }) => {
-    await page.setViewportSize({ width, height: 1000 });
-    await page.goto("/");
-    const pin = page.locator("[data-hero-reveal]");
-    const panel = page.locator("#hero-panel");
-    await expect(panel).toBeHidden();
-    await expect(page.locator("#main-navigation")).toBeHidden();
-    await expect(page.locator(".hero-shortcuts")).toBeHidden();
-    await expect(pin).toBeInViewport();
-    const portrait = await page.locator(".hero-portrait").boundingBox();
-    expect(portrait!.height).toBeGreaterThan(600);
-    await pin.click();
-    await expect(panel).toBeVisible();
-    await expect(pin).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator("#tab-uslugi")).toBeFocused();
-    await page.keyboard.press("ArrowRight");
-    await expect(page.locator("#panel-lokalizacje")).toBeVisible();
-    await page.keyboard.press("End");
-    await expect(page.locator("#panel-rodo")).toBeVisible();
-    await page.keyboard.press("Home");
-    for (const tab of await panel.getByRole("tab").all()) {
-      await tab.click();
-      await expect(tab).toHaveAttribute("aria-selected", "true");
-      expect(
-        (await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze())
-          .violations
-      ).toEqual([]);
-    }
-    await page.keyboard.press("Escape");
-    await expect(panel).toBeHidden();
-    await expect(pin).toBeFocused();
-    await expect(pin).toHaveAttribute("aria-expanded", "false");
-    await pin.click();
-    await panel.getByRole("button", { name: "Zamknij panel" }).click();
-    await expect(panel).toBeHidden();
-    await pin.click();
-    await page.locator("#tab-uslugi").click();
-    await page.locator("#panel-uslugi [data-panel-link]").click();
-    await expect(panel).toBeHidden();
-    await expect(page).toHaveURL(/#uslugi$/);
-    await expect(page.locator("#uslugi")).toBeFocused();
-  });
-
-  test("scroll odsłania menu bez blokady i przejęcia fokusu: " + width + "px", async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto("/");
-    const pin = page.locator("[data-hero-reveal]");
-    const panel = page.locator("#hero-panel");
-    await expect(panel).toBeHidden();
-    await pin.focus();
-    await page.mouse.move(5, 400);
-    await page.mouse.wheel(0, 180);
-    await expect(panel).toBeVisible();
-    await expect(pin).toBeFocused();
-    await expect(page.locator(".hero")).toHaveClass(/is-panel-open/);
-    await expect
-      .poll(() =>
-        page.locator(".hero-portrait").evaluate((el) => Number(getComputedStyle(el).opacity))
-      )
-      .toBeLessThan(1);
-    expect(await page.locator("html").evaluate((el) => getComputedStyle(el).overflowY)).not.toBe(
-      "hidden"
-    );
-    await page.screenshot({ path: "test-results/hero-revealed-" + width + ".png" });
-    await page.locator("[data-panel-close]").click();
-    await page.mouse.move(5, 400);
-    await page.mouse.wheel(0, 120);
-    await expect(panel).toBeHidden();
-    // Returning to the top re-arms scroll reveal.
-    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-    await expect(page.locator("html")).not.toHaveClass(/hero-revealed/);
-    await page.mouse.wheel(0, 180);
-    await expect(panel).toBeVisible();
-    await page.evaluate(() =>
-      document.querySelector("#kontakt")!.scrollIntoView({ behavior: "instant" })
-    );
-    await expect(panel).toBeHidden();
-    await expect(page.locator("#kontakt")).toBeInViewport();
-  });
-}
-
 test("dotykowy scroll na telefonie odsłania menu", async ({ browser }) => {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -140,31 +69,6 @@ test("dotykowy scroll na telefonie odsłania menu", async ({ browser }) => {
   await expect(page.locator("#hero-panel")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await context.close();
-});
-
-test("mobile: menu po akcji, zmiana rozmiaru i klik poza panelem", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  const toggle = page.getByRole("button", { name: "Menu", exact: true });
-  await expect(toggle).toBeHidden();
-  await expect(page.locator(".mobile-cta")).toBeHidden();
-  await page.locator("[data-hero-reveal]").click();
-  await expect(toggle).toBeVisible();
-  await expect(page.locator(".mobile-cta")).toBeVisible();
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(page.locator("#hero-panel")).toBeVisible();
-  await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.locator("#hero-panel")).toBeVisible();
-  await page.evaluate(() => window.scrollTo({ top: 150, behavior: "instant" }));
-  await toggle.click();
-  await expect(page.locator("#hero-panel")).toBeHidden();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await page.keyboard.press("Escape");
-  await expect(toggle).toBeFocused();
-  await toggle.click();
-  await page.locator("#main-navigation").getByRole("link", { name: "Jak pomagam" }).click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await expect(page).toHaveURL(/#uslugi$/);
 });
 
 test("linki, brak fikcyjnych danych i metadane", async ({ page, request }) => {
@@ -247,9 +151,9 @@ test("bez JavaScriptu treść i nawigacja pozostają dostępne", async ({ browse
 
 test("ograniczenie animacji jest respektowane", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.setViewportSize({ width: 390, height: 1000 });
   await page.goto("/");
-  await page.locator("[data-hero-reveal]").click();
+  await page.locator("[data-hero-menu]").click();
   expect(
     await page.locator("#hero-panel").evaluate((element) => getComputedStyle(element).animationName)
   ).toBe("none");
@@ -258,4 +162,94 @@ test("ograniczenie animacji jest respektowane", async ({ page }) => {
       .locator(".hero-portrait")
       .evaluate((element) => getComputedStyle(element).transitionDuration)
   ).toBe("0s");
+});
+
+for (const width of [390, 1440]) {
+  test(`scroll: zdjęcie znika, menu pod headerem przy ${width}px`, async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const panel = page.locator("#hero-panel");
+    const scene = page.locator(".hero-main");
+    await expect(panel).toBeHidden();
+    const initial = await scene.boundingBox();
+    if (width === 1440) {
+      const visual = (await page.locator(".hero-visual").boundingBox())!;
+      expect(visual.width / (initial!.width - 24)).toBeCloseTo(0.75, 2);
+    }
+    await page.mouse.wheel(0, 180);
+    await expect(panel).toBeVisible();
+    await expect
+      .poll(async () => (await scene.boundingBox())!.height)
+      .toBeLessThan(initial!.height - 100);
+    const pictureBottom = (await scene.boundingBox())!.y + (await scene.boundingBox())!.height;
+    expect((await panel.boundingBox())!.y).toBeGreaterThanOrEqual(pictureBottom - 2);
+    await page.evaluate(() => window.scrollTo({ top: 720, behavior: "instant" }));
+    await expect.poll(async () => (await scene.boundingBox())!.height).toBeLessThan(2);
+    await page.evaluate(() => window.scrollTo({ top: 850, behavior: "instant" }));
+    await expect(page.locator("html")).toHaveClass(/menu-docked/);
+    await expect(page.locator(".site-header")).toBeHidden();
+    await expect(page.locator(".hero-menu-brand")).toBeVisible();
+    expect((await page.locator(".hero-menu-bar").boundingBox())!.y).toBe(0);
+    await expect(panel.getByRole("tab")).toHaveCount(8);
+    await expect(page.locator("#main-navigation")).toBeHidden();
+    await expect(page.locator("[data-panel-close]")).toBeHidden();
+    for (const tab of await panel.getByRole("tab").all()) {
+      await tab.click();
+      await expect(tab).toHaveAttribute("aria-selected", "true");
+      expect(
+        (await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze())
+          .violations
+      ).toEqual([]);
+    }
+    await page.locator("#tab-uslugi").focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator("#panel-lokalizacje")).toBeVisible();
+    await page.keyboard.press("End");
+    await expect(page.locator("#panel-rodo")).toBeVisible();
+    await page.screenshot({ path: `test-results/menu-docked-${width}.png` });
+    await page.evaluate(() =>
+      document.querySelector("#kontakt")!.scrollIntoView({ behavior: "instant" })
+    );
+    await expect(page.locator(".hero-menu-brand")).toBeInViewport();
+    expect((await page.locator(".hero-menu-bar").boundingBox())!.y).toBe(0);
+    await page.locator("#tab-uslugi").click();
+    await expect(page.locator("#panel-uslugi")).toBeInViewport();
+    await page.screenshot({ path: `test-results/menu-content-${width}.png` });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    await expect(panel).toBeHidden();
+    await expect.poll(async () => (await scene.boundingBox())!.height).toBeGreaterThan(800);
+  });
+}
+
+test("desktop: pinezka prowadzi do mapy, a przyciski obok niej są zwarte", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const mapPin = page.getByRole("link", { name: site.hero.mapPinLabel });
+  await expect(mapPin).toBeInViewport();
+  await expect(mapPin).toHaveAttribute("href", "#lokalizacje");
+  await mapPin.click();
+  await expect(page).toHaveURL(/#lokalizacje$/);
+  await expect(page.locator("#lokalizacje")).toBeInViewport();
+  const map = page.locator(".location-map");
+  await expect(map.locator("iframe")).toHaveAttribute("src", locations.items[0].embedUrl);
+  const links = page.locator(".location-alternatives > a");
+  for (const link of await links.all()) {
+    const bounds = (await link.boundingBox())!;
+    expect(bounds.height).toBeGreaterThanOrEqual(44);
+    expect(bounds.height).toBeLessThanOrEqual(140);
+  }
+  expect((await links.first().boundingBox())!.x).toBeGreaterThan((await map.boundingBox())!.x);
+  await page.screenshot({ path: "test-results/desktop-location-layout.png" });
+});
+
+test("desktop: klawiatura może przejść od zdjęcia do menu", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.locator("[data-hero-menu]").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#tab-uslugi")).toBeFocused();
+  await expect(page.locator(".hero-main")).toHaveAttribute("inert", "");
+  await expect(page.locator("#hero-panel")).toBeVisible();
 });

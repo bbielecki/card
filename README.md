@@ -2,6 +2,10 @@
 
 Statyczne MVP w Astro + TypeScript + SCSS. Jedna strona z sekcjami, interaktywnym hero na desktopie, mobilną nawigacją i podstroną RODO.
 
+Na wszystkich ekranach przewijanie chowa zdjęcie i odsłania gradientem osiem zakładek pod nagłówkiem. Pinezka prowadzi do mapy. Zdjęcie na desktopie zajmuje 75% szerokości układu.
+
+Po dotarciu do górnej krawędzi menu z logo ŁW+ zastępuje nagłówek i pozostaje widoczne podczas dalszego przewijania.
+
 ## Uruchomienie
 
 Node.js >=22.19.0 (zalecany zgodny LTS).

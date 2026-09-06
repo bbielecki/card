@@ -2,100 +2,85 @@ export {};
 
 const hero = document.querySelector<HTMLElement>(".hero");
 const panel = document.querySelector<HTMLElement>("#hero-panel");
-const pin = document.querySelector<HTMLButtonElement>("[data-hero-reveal]");
 
-if (hero && panel && pin) {
+if (hero && panel) {
   const root = document.documentElement;
   const tabs = [...panel.querySelectorAll<HTMLButtonElement>("[data-panel-tab]")];
   const contents = [...panel.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
   const header = document.querySelector<HTMLElement>(".site-header");
-  let open = false;
-  let dismissed = false;
-  let navigationRevealed = false;
+  const main = hero.querySelector<HTMLElement>(".hero-main")!;
+  const menuBar = panel.querySelector<HTMLElement>(".hero-menu-bar")!;
+  let focusMenu = false;
   let framePending = false;
-  let previousY = window.scrollY;
 
   const select = (id: string, focus = false) => {
     tabs.forEach((tab) => {
       const active = tab.dataset.panelTab === id;
       tab.setAttribute("aria-selected", String(active));
       tab.tabIndex = active ? 0 : -1;
-      if (active && focus) tab.focus({ preventScroll: true });
+      if (active && focus) {
+        tab.focus({ preventScroll: true });
+        const list = tab.parentElement!;
+        list.scrollLeft = tab.offsetLeft - list.offsetLeft - 12;
+      }
     });
     contents.forEach((content) => {
       content.hidden = content.id !== "panel-" + id;
     });
+    if (root.classList.contains("menu-docked") && panel.getBoundingClientRect().top < 0) {
+      const { start, distance, headerHeight } = geometry();
+      window.scrollTo({ top: start + distance + headerHeight, behavior: "instant" });
+    }
   };
 
-  const updateNavigation = () => {
-    root.classList.toggle("hero-revealed", navigationRevealed || open || window.scrollY > 24);
+  const geometry = () => {
+    const headerHeight = header?.getBoundingClientRect().height ?? 88;
+    const sceneHeight = Math.max(620, window.innerHeight - headerHeight);
+    const start = hero.getBoundingClientRect().top + window.scrollY - headerHeight;
+    return { sceneHeight, start, headerHeight, distance: sceneHeight * 0.85 };
   };
 
-  const reveal = (fromPin = false) => {
-    if (open) return;
-    open = true;
-    navigationRevealed = true;
-    panel.hidden = false;
-    hero.classList.add("is-panel-open");
-    pin.setAttribute("aria-expanded", "true");
-    updateNavigation();
-    // Scroll reveals content without moving the user's keyboard focus.
-    if (fromPin)
+  const update = () => {
+    const { sceneHeight, start, distance, headerHeight } = geometry();
+    const progress = Math.max(0, Math.min(1, (window.scrollY - start) / distance));
+    const headerShift = Math.max(0, Math.min(headerHeight, window.scrollY - start - distance));
+    root.style.setProperty("--hero-header-shift", headerShift + "px");
+    const docked = headerShift >= headerHeight - 1;
+    root.classList.toggle("menu-docked", docked);
+    if (header) header.inert = docked;
+    root.style.setProperty(
+      "--hero-header-height",
+      (header?.getBoundingClientRect().height ?? 88) + "px"
+    );
+    hero.style.setProperty("--hero-scene-height", sceneHeight + "px");
+    hero.style.setProperty("--hero-progress", String(progress));
+    panel.hidden = progress <= 0.002;
+    if (!panel.hidden) hero.style.setProperty("--hero-menu-height", menuBar.offsetHeight + "px");
+    main.inert = progress >= 0.99;
+    hero.classList.toggle("is-menu-revealed", !panel.hidden);
+    root.classList.toggle("hero-revealed", !panel.hidden);
+    if (progress >= 0.99 && focusMenu) {
+      focusMenu = false;
       panel
         .querySelector<HTMLButtonElement>('[aria-selected="true"]')
         ?.focus({ preventScroll: true });
-  };
-
-  const close = (restoreFocus = false, suppressReopen = true) => {
-    if (!open) return;
-    open = false;
-    dismissed = suppressReopen;
-    panel.hidden = true;
-    hero.classList.remove("is-panel-open");
-    pin.setAttribute("aria-expanded", "false");
-    updateNavigation();
-    if (restoreFocus) pin.focus({ preventScroll: true });
-  };
-
-  const onScroll = () => {
-    framePending = false;
-    const y = window.scrollY;
-    const movingDown = y > previousY;
-    const returningToTop = y <= 12 && previousY > 12;
-    previousY = y;
-    const bounds = hero.getBoundingClientRect();
-    const headerHeight = header?.getBoundingClientRect().height ?? 0;
-    const threshold = Math.min(96, window.innerHeight * 0.12);
-    if (y <= 12) {
-      dismissed = false;
-      // Focusing the sticky header can scroll to the top; keep its menu usable.
-      if (returningToTop && !header?.contains(document.activeElement)) {
-        navigationRevealed = false;
-        close(false, false);
-      }
     }
-    // Only reveal in the introductory scene, never while reading lower sections.
-    const inScene = bounds.bottom > window.innerHeight * 0.65 && bounds.top < headerHeight;
-    if (inScene && movingDown && y >= threshold && !dismissed) reveal();
-    if (bounds.bottom <= headerHeight) close(false);
-    updateNavigation();
   };
 
   hero.classList.add("is-enhanced");
   root.classList.add("has-interactive-hero");
-  pin.hidden = false;
-  const hint = hero.querySelector<HTMLElement>(".hero-scroll-hint");
-  if (hint) hint.hidden = false;
-  updateNavigation();
-
-  pin.addEventListener("click", () => {
-    if (open) close(true);
-    else {
-      dismissed = false;
-      reveal(true);
-    }
+  update();
+  hero.querySelector<HTMLAnchorElement>("[data-hero-menu]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    const { start, distance, headerHeight } = geometry();
+    focusMenu = true;
+    window.scrollTo({
+      top: start + distance + headerHeight + 1,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
   });
-  panel.querySelector("[data-panel-close]")?.addEventListener("click", () => close(true));
 
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => select(tab.dataset.panelTab!));
@@ -122,16 +107,8 @@ if (hero && panel && pin) {
     });
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && open && !event.defaultPrevented) close(true);
-  });
-  document.addEventListener("click", (event) => {
-    const target = event.target as Element;
-    if (open && !panel.contains(target) && !pin.contains(target)) close(false);
-  });
   panel.querySelectorAll<HTMLAnchorElement>("[data-panel-link]").forEach((link) =>
     link.addEventListener("click", () => {
-      close(false);
       if (link.hash) {
         const section = document.getElementById(link.hash.slice(1));
         section?.setAttribute("tabindex", "-1");
@@ -148,11 +125,14 @@ if (hero && panel && pin) {
     () => {
       if (!framePending) {
         framePending = true;
-        requestAnimationFrame(onScroll);
+        requestAnimationFrame(() => {
+          framePending = false;
+          update();
+        });
       }
     },
     { passive: true }
   );
-  window.addEventListener("resize", updateNavigation);
-  window.addEventListener("pageshow", updateNavigation);
+  window.addEventListener("resize", update);
+  window.addEventListener("pageshow", update);
 }

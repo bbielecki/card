@@ -51,3 +51,9 @@ Testy znajdują się w `tests/site.spec.ts`; zrzuty generują się w ignorowanym
 - `netlify.toml`, `.env.example`, `.gitignore`, `README.md`, `docs/`: konfiguracja i dokumentacja.
 
 Źródłowe dokumenty klienta w `ai/` pozostawiono bez zmian.
+
+## Aktualizacja menu — 6 września 2026
+
+Menu z ośmioma zakładkami i logo ŁW+ zastępuje nagłówek po dojściu do górnej krawędzi. Zdjęcie ma 75% szerokości układu desktopowego. Usunięto popup; wejście menu wykorzystuje gradient zależny od scrolla.
+
+`npm run check`: 0 błędów, ostrzeżeń i wskazówek. `npm run build`: sukces. `npm run test:e2e`: 14/14 testów na lokalnym serwerze, w tym sześć szerokości ekranu, WCAG AA, scroll dotykowy, klawiatura, przypięcie menu przy niższych sekcjach, powrót do treści zakładki, mapa i proporcje przycisków. Obejrzano zrzuty menu na desktopie i telefonie. Testy osadzenia mapy zastępują odpowiedź Google lokalnym dokumentem; nie weryfikują zewnętrznego interfejsu Google Maps.

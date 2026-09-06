@@ -22,7 +22,8 @@ import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
         <div class="hero-actions">
           <a class="button" href="#kontakt">{site.ui.appointment}<Icon /></a><a
             class="text-link"
-            href="#o-mnie">{site.hero.secondaryCta}<span aria-hidden="true">↘</span></a>
+            href="#o-mnie">{site.hero.secondaryCta}<span aria-hidden="true">↘</span></a
+          >
         </div>
       </div>
       <div class="hero-visual">
@@ -85,19 +86,8 @@ import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
             )
           }
         </div>
-        <button
-          type="button"
-          class="hero-pin"
-          data-hero-reveal
-          aria-expanded="false"
-          aria-controls="hero-panel"
-          aria-label={site.hero.revealLabel}
-          hidden><Icon name="pin" /></button
-        >
-        <a
-          class="hero-pin hero-pin-fallback"
-          href="#hero-shortcuts"
-          aria-label={site.hero.revealLabel}><Icon name="pin" /></a
+        <a class="hero-pin hero-map-pin" href="#lokalizacje" aria-label={site.hero.mapPinLabel}
+          ><Icon name="pin" /></a
         >
         <div class="portrait-caption">
           <span class="caption-cross" aria-hidden="true">+</span><div>
@@ -107,7 +97,9 @@ import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
         <span class="visual-label" aria-hidden="true">FIZJOTERAPIA & REHABILITACJA</span>
       </div>
     </div>
-    <p class="hero-scroll-hint" hidden><span aria-hidden="true">↓</span>{site.hero.scrollHint}</p>
+    <a class="hero-menu-hint" href="#hero-panel" data-hero-menu
+      ><span aria-hidden="true">↓</span>{site.hero.desktopScrollHint}</a
+    >
     <div class="container hero-shortcuts" id="hero-shortcuts">
       <p>{site.hero.shortcutsLabel}<span aria-hidden="true">↘</span></p><div class="shortcut-grid">
         {
