@@ -7,40 +7,65 @@ import Icon from "../common/Icon.astro";
 
 <section id="lokalizacje" class="section">
   <div class="container">
-    <SectionHeader {...data} /><div class="location-grid">
+    <SectionHeader {...data} />
+
+    <div class="location-grid">
       {
         data.items.map((location) => (
           <article class="location-card">
-            <p>{location.description}</p>
-            {location.googleMapsUrl ? (
-              <a
-                class="button"
-                href={location.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {data.mapLabel}
-                <Icon />
-              </a>
+            <div class="location-card__content">
+              <h3>{location.name}</h3>
+
+              {location.address && (
+                <p class="location-card__address">{location.address}</p>
+              )}
+
+              <p>{location.description}</p>
+
+              {location.googleMapsUrl ? (
+                <a
+                  class="button"
+                  href={location.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {data.mapLabel}
+                  <Icon />
+                </a>
+              ) : (
+                <p class="editorial-note">{data.mapPending}</p>
+              )}
+            </div>
+
+            {location.embedUrl ? (
+              <div class="location-map">
+                <iframe
+                  src={location.embedUrl}
+                  title={`Mapa lokalizacji: ${location.name}`}
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                />
+              </div>
             ) : (
               <p class="editorial-note">{data.mapPending}</p>
             )}
           </article>
         ))
-      }<div class="location-alternatives">
+      }
+
+      <div class="location-alternatives">
         {
           consultations.map((item) => (
             <a href={`#${item.id}`}>
-              <>
-                <Icon name={item.icon} />
-                <span>
-                  <>
-                    <strong>{item.eyebrow.replace("05 / ", "")}</strong>
-                    <span>{item.cta}</span>
-                  </>
-                </span>
-                <Icon />
-              </>
+              <Icon name={item.icon} />
+
+              <span>
+                <strong>{item.eyebrow.replace("05 / ", "")}</strong>
+                <span>{item.cta}</span>
+              </span>
+
+              <Icon />
             </a>
           ))
         }
