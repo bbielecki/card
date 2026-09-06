@@ -165,6 +165,51 @@ test("ograniczenie animacji jest respektowane", async ({ page }) => {
 });
 
 for (const width of [390, 1440]) {
+  test(`aktywna zakładka śledzi sekcje przy scrollu: ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/#rehabilitacja");
+    await expect(page.locator("#tab-rehabilitacja")).toHaveAttribute("aria-current", "location");
+    const order = await page.locator("[data-panel-tab]").evaluateAll((tabs) => {
+      const menu = tabs
+        .map((tab) => tab.getAttribute("data-panel-tab")!)
+        .filter((id) => document.getElementById(id));
+      const sections = [...document.querySelectorAll("section[id]")]
+        .map((section) => section.id)
+        .filter((id) => menu.includes(id));
+      return { menu, sections };
+    });
+    expect(order.sections).toEqual(order.menu);
+    const brand = page.locator(".hero-menu-brand");
+    await brand.focus();
+    for (const id of [
+      "uslugi",
+      "lokalizacje",
+      "rehabilitacja",
+      "telekonsultacja",
+      "wspolpraca",
+      "kontakt",
+      "telekonsultacja",
+      "rehabilitacja",
+    ]) {
+      const position = await page.evaluate((id) => {
+        const section = document.getElementById(id)!;
+        const top = section.getBoundingClientRect().top + scrollY - 100;
+        window.scrollTo({ top, behavior: "instant" });
+        return scrollY;
+      }, id);
+      const active = page.locator(`#tab-${id}`);
+      await expect(active).toHaveAttribute("aria-current", "location");
+      await expect(page.locator('.panel-tabs [aria-current="location"]')).toHaveCount(1);
+      await expect(active).toBeInViewport();
+      await expect(brand).toBeFocused();
+      expect(await page.evaluate(() => scrollY)).toBeCloseTo(position, 0);
+    }
+    await page.locator("#tab-uslugi").click();
+    await expect(page.locator("#panel-uslugi")).toBeInViewport();
+    await expect(page.locator(".panel-tabs [aria-current]")).toHaveCount(0);
+    await expect(page.locator("#tab-uslugi")).toHaveAttribute("aria-selected", "true");
+  });
+
   test(`scroll: zdjęcie znika, menu pod headerem przy ${width}px`, async ({ page }) => {
     test.setTimeout(60_000);
     await page.setViewportSize({ width, height: 900 });
@@ -191,7 +236,7 @@ for (const width of [390, 1440]) {
     await expect(page.locator(".site-header")).toBeHidden();
     await expect(page.locator(".hero-menu-brand")).toBeVisible();
     expect((await page.locator(".hero-menu-bar").boundingBox())!.y).toBe(0);
-    await expect(panel.getByRole("tab")).toHaveCount(8);
+    await expect(panel.getByRole("tab")).toHaveCount(7);
     await expect(page.locator("#main-navigation")).toBeHidden();
     await expect(page.locator("[data-panel-close]")).toBeHidden();
     for (const tab of await panel.getByRole("tab").all()) {

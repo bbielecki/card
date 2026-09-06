@@ -10,6 +10,8 @@ Po schowaniu zdjęcia dalszy scroll wysuwa nagłówek poza ekran, a menu dochodz
 
 Wszystkie osiem zakładek obsługuje strzałki lewo/prawo, Home i End. Linki prowadzą do pełnych sekcji i ustawiają na nich fokus. Bez JavaScriptu dostępne są klasyczne menu, skróty i wszystkie sekcje.
 
+Podczas czytania pełnych sekcji podkreślenie w menu automatycznie śledzi pozycję scrolla w obu kierunkach. Bieżąca sekcja jest oznaczona `aria-current="location"`; na telefonie jej zakładka jest odsuwana do widocznego obszaru paska. Scroll nie zmienia treści panelu hero ani fokusu, dzięki czemu nie powoduje przeskoków strony. RODO pozostaje osobną podstroną i nie otrzymuje oznaczenia podczas przewijania strony głównej.
+
 Zdjęcie i gradient menu reagują na pozycję przewijania. `prefers-reduced-motion` wyłącza animacje, przejścia i płynne przewijanie. Bez JavaScriptu dostępne są wszystkie sekcje strony.
 
 Wersja robocza jest jawnie oznaczona w stopce i przy proponowanych treściach. Puste dane kontaktowe renderują informację o oczekiwaniu, a nie niedziałające linki. Sekcja lokalizacji korzysta z adresu i osadzonej mapy dodanych przez użytkownika. Przyciski telekonsultacji i wizyty domowej są wyrównane do góry, bez rozciągania do wysokości mapy; na desktopie mają około 104 px wysokości.

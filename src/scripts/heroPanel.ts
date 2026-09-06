@@ -10,6 +10,11 @@ if (hero && panel) {
   const header = document.querySelector<HTMLElement>(".site-header");
   const main = hero.querySelector<HTMLElement>(".hero-main")!;
   const menuBar = panel.querySelector<HTMLElement>(".hero-menu-bar")!;
+  const sectionIds = new Set(tabs.map((tab) => tab.dataset.panelTab));
+  const sections = [...document.querySelectorAll<HTMLElement>("section[id]")].filter((section) =>
+    sectionIds.has(section.id)
+  );
+  let currentSection: string | undefined;
   let focusMenu = false;
   let framePending = false;
 
@@ -40,6 +45,28 @@ if (hero && panel) {
     return { sceneHeight, start, headerHeight, distance: sceneHeight * 0.85 };
   };
 
+  const updateCurrentSection = () => {
+    const readingLine = menuBar.offsetHeight + Math.min(180, window.innerHeight * 0.2);
+    const current = sections.findLast(
+      (section) => section.getBoundingClientRect().top <= readingLine
+    )?.id;
+    if (current === currentSection) return;
+    currentSection = current;
+    tabs.forEach((tab) => {
+      if (tab.dataset.panelTab === current) {
+        tab.setAttribute("aria-current", "location");
+        const list = tab.parentElement!;
+        const bounds = tab.getBoundingClientRect();
+        const viewport = list.getBoundingClientRect();
+        if (bounds.left < viewport.left || bounds.right > viewport.right) {
+          list.scrollLeft += bounds.left - viewport.left - (viewport.width - bounds.width) / 2;
+        }
+      } else tab.removeAttribute("aria-current");
+    });
+    // Scrolling only marks the current page section. It must not switch hero
+    // content (and change page height), move keyboard focus, or navigate back up.
+  };
+
   const update = () => {
     const { sceneHeight, start, distance, headerHeight } = geometry();
     const progress = Math.max(0, Math.min(1, (window.scrollY - start) / distance));
@@ -59,6 +86,7 @@ if (hero && panel) {
     main.inert = progress >= 0.99;
     hero.classList.toggle("is-menu-revealed", !panel.hidden);
     root.classList.toggle("hero-revealed", !panel.hidden);
+    updateCurrentSection();
     if (progress >= 0.99 && focusMenu) {
       focusMenu = false;
       panel

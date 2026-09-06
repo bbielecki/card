@@ -155,7 +155,8 @@
     background: transparent;
     color: #304e68;
   }
-  .panel-tabs button[aria-selected="true"] {
+  .panel-tabs:not(:has([aria-current="location"])) button[aria-selected="true"],
+  .panel-tabs button[aria-current="location"] {
     background: linear-gradient(0deg, #d9e7f2, transparent);
     border-bottom-color: #163c5d;
     color: #0b1f3a;
