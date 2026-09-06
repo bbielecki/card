@@ -1,14 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HeroSection from '../components/sections/HeroSection.astro';
-import AboutSection from '../components/sections/AboutSection.astro';
-import ServicesSection from '../components/sections/ServicesSection.astro';
-import RehabilitationSection from '../components/sections/RehabilitationSection.astro';
-import LocationsSection from '../components/sections/LocationsSection.astro';
-import ConsultationSection from '../components/sections/ConsultationSection.astro';
-import CooperationSection from '../components/sections/CooperationSection.astro';
-import ContactSection from '../components/sections/ContactSection.astro';
-import consultations from '../content/consultations.json';
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/sections/HeroSection.astro";
+import AboutSection from "../components/sections/AboutSection.astro";
+import ServicesSection from "../components/sections/ServicesSection.astro";
+import RehabilitationSection from "../components/sections/RehabilitationSection.astro";
+import LocationsSection from "../components/sections/LocationsSection.astro";
+import ConsultationSection from "../components/sections/ConsultationSection.astro";
+import CooperationSection from "../components/sections/CooperationSection.astro";
+import ContactSection from "../components/sections/ContactSection.astro";
+import consultations from "../content/consultations.json";
 ---
 
 <Layout>
@@ -17,7 +17,7 @@ import consultations from '../content/consultations.json';
   <ServicesSection />
   <RehabilitationSection />
   <LocationsSection />
-  {consultations.map(consultation => <ConsultationSection consultation={consultation} />)}
+  {consultations.map((consultation) => <ConsultationSection consultation={consultation} />)}
   <CooperationSection />
   <ContactSection />
 </Layout>

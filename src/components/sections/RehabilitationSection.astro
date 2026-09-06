@@ -1,5 +1,22 @@
 ---
-import data from '../../content/rehabilitation.json';
-import SectionHeader from '../common/SectionHeader.astro';
+import data from "../../content/rehabilitation.json";
+import SectionHeader from "../common/SectionHeader.astro";
 ---
-<section id="rehabilitacja" class="section rehabilitation-section"><div class="container"><SectionHeader {...data} /><ol class="steps">{data.steps.map((step, i) => <li><span class="step-number">0{i + 1}</span><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol></div></section>
+
+<section id="rehabilitacja" class="section rehabilitation-section">
+  <div class="container">
+    <SectionHeader {...data} /><ol class="steps">
+      {
+        data.steps.map((step, i) => (
+          <li>
+            <>
+              <span class="step-number">0{i + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

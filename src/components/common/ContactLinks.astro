@@ -1,19 +1,56 @@
 ---
-import site from '../../content/site.json';
-import Icon from './Icon.astro';
-interface Props { compact?: boolean; }
+import site from "../../content/site.json";
+import Icon from "./Icon.astro";
+interface Props {
+  compact?: boolean;
+}
 const { compact = false } = Astro.props;
 const links = [
-  { label: site.contact.phoneLabel, value: site.phone, href: site.phone ? `tel:${site.phone.replace(/[^+\d]/g, '')}` : '', pending: site.contact.phonePending, icon: 'phone' },
-  { label: site.contact.emailLabel, value: site.email, href: site.email ? `mailto:${site.email}` : '', pending: site.contact.emailPending, icon: 'mail' },
-  { label: site.ui.instagram, value: site.instagramUrl ? site.ui.instagram : '', href: site.instagramUrl, pending: site.contact.socialPending, icon: 'instagram' },
+  {
+    label: site.contact.phoneLabel,
+    value: site.phone,
+    href: site.phone ? `tel:${site.phone.replace(/[^+\d]/g, "")}` : "",
+    pending: site.contact.phonePending,
+    icon: "phone",
+  },
+  {
+    label: site.contact.emailLabel,
+    value: site.email,
+    href: site.email ? `mailto:${site.email}` : "",
+    pending: site.contact.emailPending,
+    icon: "mail",
+  },
+  {
+    label: site.ui.instagram,
+    value: site.instagramUrl ? site.ui.instagram : "",
+    href: site.instagramUrl,
+    pending: site.contact.socialPending,
+    icon: "instagram",
+  },
 ];
 ---
-<div class:list={['contact-links', { 'contact-links--compact': compact }]}>
-  {links.map(link => <div class="contact-item">
-    <Icon name={link.icon} />
-    <div><span class="contact-label">{link.label}</span>
-      {link.href ? <a href={link.href} target={link.icon === 'instagram' ? '_blank' : undefined} rel={link.icon === 'instagram' ? 'noopener noreferrer' : undefined}>{link.value}<span aria-hidden="true"> ↗</span></a> : <span class="pending-value">{link.pending}</span>}
-    </div>
-  </div>)}
+
+<div class:list={["contact-links", { "contact-links--compact": compact }]}>
+  {
+    links.map((link) => (
+      <div class="contact-item">
+        <Icon name={link.icon} />
+        <div>
+          <span class="contact-label">{link.label}</span>
+          {link.href ? (
+            <a
+              href={link.href}
+              target={link.icon === "instagram" ? "_blank" : undefined}
+              rel={link.icon === "instagram" ? "noopener noreferrer" : undefined}
+            >
+              {link.value}
+              <span aria-hidden="true"> ↗</span>
+            </a>
+          ) : (
+            <span class="pending-value">{link.pending}</span>
+          )}
+        </div>
+      </div>
+    ))
+  }
 </div>

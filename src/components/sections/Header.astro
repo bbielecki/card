@@ -1,19 +1,24 @@
 ---
-import site from '../../content/site.json';
-import Icon from '../common/Icon.astro';
-const home = Astro.url.pathname === '/' ? '' : '/';
+import site from "../../content/site.json";
+import Icon from "../common/Icon.astro";
+const home = Astro.url.pathname === "/" ? "" : "/";
 ---
+
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="/" aria-label={`${site.name} — strona główna`}>
       <span class="brand-mark" aria-hidden="true">ŁW<span>+</span></span>
       <span class="brand-copy">{site.name}<small>{site.title}</small></span>
     </a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" hidden>{site.ui.menu}<Icon name="plus" /></button>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" hidden
+      >{site.ui.menu}<Icon name="plus" /></button
+    >
     <nav id="main-navigation" aria-label="Nawigacja główna">
-      {site.navigation.map(link => <a href={`${home}${link.href}`}>{link.label}</a>)}
+      {site.navigation.map((link) => <a href={`${home}${link.href}`}>{link.label}</a>)}
       <a class="button button--small" href={`${home}#kontakt`}>{site.ui.contact}<Icon /></a>
     </nav>
   </div>
 </header>
-<script>import '../../scripts/navigation';</script>
+<script>
+  import "../../scripts/navigation";
+</script>

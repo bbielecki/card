@@ -428,12 +428,12 @@ Mobile powinien działać jako:
 Kolory bazowe:
 
 ```scss
-$color-navy: #0B1F3A;
-$color-navy-light: #16385F;
-$color-white: #FFFFFF;
-$color-off-white: #F7F9FC;
+$color-navy: #0b1f3a;
+$color-navy-light: #16385f;
+$color-white: #ffffff;
+$color-off-white: #f7f9fc;
 $color-gray: #667085;
-$color-accent: #6EA8FE;
+$color-accent: #6ea8fe;
 ```
 
 6. Zdefiniuj typografię.

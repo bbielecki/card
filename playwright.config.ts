@@ -1,15 +1,15 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   fullyParallel: true,
   workers: 2,
-  reporter: 'list',
+  reporter: "list",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4321',
-    browserName: 'chromium',
-    channel: process.env.PLAYWRIGHT_CHANNEL || 'msedge',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:4321",
+    browserName: "chromium",
+    channel: process.env.PLAYWRIGHT_CHANNEL || "msedge",
     headless: true,
-    trace: 'retain-on-failure',
+    trace: "retain-on-failure",
   },
 });

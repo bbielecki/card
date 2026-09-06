@@ -1,10 +1,48 @@
 ---
-import site from '../../content/site.json';
-import SectionHeader from '../common/SectionHeader.astro';
-import Photo from '../common/Photo.astro';
-import Icon from '../common/Icon.astro';
+import site from "../../content/site.json";
+import SectionHeader from "../common/SectionHeader.astro";
+import Photo from "../common/Photo.astro";
+import Icon from "../common/Icon.astro";
 ---
-<section id="o-mnie" class="section about-section"><div class="container about-grid">
-  <div class="about-visual">{site.hero.background ? <Photo file={site.hero.background} alt={site.hero.backgroundAlt} /> : <div class="work-placeholder"><div class="movement-art" aria-hidden="true"><span></span><span></span><span></span><Icon name="activity" /></div><p>{site.ui.workPlaceholder}</p></div>}<span class="about-visual-label">{site.ui.footer}</span></div>
-  <div><SectionHeader eyebrow={site.about.eyebrow} heading={site.about.heading} /><p class="lead">{site.about.lead}</p>{site.about.paragraphs.map(paragraph => <p class="body-copy">{paragraph}</p>)}<ul class="value-list">{site.about.values.map(value => <li><Icon name="check" />{value}</li>)}</ul>{site.isDraft && <p class="editorial-note">{site.about.note}</p>}</div>
-</div></section>
+
+<section id="o-mnie" class="section about-section">
+  <div class="container about-grid">
+    <div class="about-visual">
+      {
+        site.hero.background ? (
+          <Photo file={site.hero.background} alt={site.hero.backgroundAlt} />
+        ) : (
+          <div class="work-placeholder">
+            <>
+              <div class="movement-art" aria-hidden="true">
+                <>
+                  <span />
+                  <span />
+                  <span />
+                  <Icon name="activity" />
+                </>
+              </div>
+              <p>{site.ui.workPlaceholder}</p>
+            </>
+          </div>
+        )
+      }<span class="about-visual-label">{site.ui.footer}</span>
+    </div>
+    <div>
+      <SectionHeader eyebrow={site.about.eyebrow} heading={site.about.heading} /><p class="lead">
+        {site.about.lead}
+      </p>{site.about.paragraphs.map((paragraph) => <p class="body-copy">{paragraph}</p>)}<ul
+        class="value-list"
+      >
+        {
+          site.about.values.map((value) => (
+            <li>
+              <Icon name="check" />
+              {value}
+            </li>
+          ))
+        }
+      </ul>{site.isDraft && <p class="editorial-note">{site.about.note}</p>}
+    </div>
+  </div>
+</section>

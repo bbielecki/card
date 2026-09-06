@@ -4,15 +4,15 @@ Kod znajduje się w katalogu `card`. Nie skonfigurowano zewnętrznego konta host
 
 ## Treści i zdjęcia
 
-| Zmiana | Plik |
-| --- | --- |
-| Nazwa, bio, telefon, e-mail, Instagram, nawigacja, hero | `src/content/site.json` |
-| Usługi | `src/content/services.json` |
-| Etapy rehabilitacji | `src/content/rehabilitation.json` |
-| Gabinety, adresy i mapy | `src/content/locations.json` |
-| Telekonsultacja, wizyta domowa | `src/content/consultations.json` |
-| Współpraca | `src/content/cooperation.json` |
-| Polityka prywatności | `src/content/rodo.md` |
+| Zmiana                                                  | Plik                              |
+| ------------------------------------------------------- | --------------------------------- |
+| Nazwa, bio, telefon, e-mail, Instagram, nawigacja, hero | `src/content/site.json`           |
+| Usługi                                                  | `src/content/services.json`       |
+| Etapy rehabilitacji                                     | `src/content/rehabilitation.json` |
+| Gabinety, adresy i mapy                                 | `src/content/locations.json`      |
+| Telekonsultacja, wizyta domowa                          | `src/content/consultations.json`  |
+| Współpraca                                              | `src/content/cooperation.json`    |
+| Polityka prywatności                                    | `src/content/rodo.md`             |
 
 Dodaj zdjęcia do `src/assets/photos/`. W `site.json` ustaw `hero.portrait` i `hero.background` na same nazwy plików, np. `portret.jpg`, `gabinet.jpg`, oraz odpowiednie alty. Astro generuje wersje WebP o szerokościach 360/640/960 px. Brak podanego pliku powoduje czytelny błąd kompilacji. Puste nazwy wyświetlają grafiki zastępcze.
 

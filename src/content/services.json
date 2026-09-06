@@ -4,9 +4,29 @@
   "description": "Od poznania problemu po pracę nad swobodą ruchu. Zakres i sposób postępowania ustalamy indywidualnie.",
   "note": "Proponowany zakres usług — do potwierdzenia przez fizjoterapeutę.",
   "items": [
-    { "id": "ortopedia", "icon": "activity", "title": "Rehabilitacja ortopedyczna", "description": "Wsparcie w powrocie do codziennych aktywności po urazach, przeciążeniach i zabiegach ortopedycznych." },
-    { "id": "sport", "icon": "arrow", "title": "Fizjoterapia sportowa", "description": "Praca z osobami aktywnymi fizycznie. Indywidualne podejście do obciążeń i powrotu do sportu." },
-    { "id": "diagnostyka", "icon": "target", "title": "Diagnostyka funkcjonalna", "description": "Rozmowa i ocena ruchu, które pomagają zrozumieć trudności i zaplanować dalsze postępowanie." },
-    { "id": "terapia", "icon": "hands", "title": "Terapia i ćwiczenia", "description": "Połączenie pracy w gabinecie z dobranymi ćwiczeniami i wskazówkami do codziennej aktywności." }
+    {
+      "id": "ortopedia",
+      "icon": "activity",
+      "title": "Rehabilitacja ortopedyczna",
+      "description": "Wsparcie w powrocie do codziennych aktywności po urazach, przeciążeniach i zabiegach ortopedycznych."
+    },
+    {
+      "id": "sport",
+      "icon": "arrow",
+      "title": "Fizjoterapia sportowa",
+      "description": "Praca z osobami aktywnymi fizycznie. Indywidualne podejście do obciążeń i powrotu do sportu."
+    },
+    {
+      "id": "diagnostyka",
+      "icon": "target",
+      "title": "Diagnostyka funkcjonalna",
+      "description": "Rozmowa i ocena ruchu, które pomagają zrozumieć trudności i zaplanować dalsze postępowanie."
+    },
+    {
+      "id": "terapia",
+      "icon": "hands",
+      "title": "Terapia i ćwiczenia",
+      "description": "Połączenie pracy w gabinecie z dobranymi ćwiczeniami i wskazówkami do codziennej aktywności."
+    }
   ]
 }

@@ -1,30 +1,130 @@
 ---
-import site from '../../content/site.json';
-import services from '../../content/services.json';
-import rehabilitation from '../../content/rehabilitation.json';
-import locations from '../../content/locations.json';
-import consultations from '../../content/consultations.json';
-import cooperation from '../../content/cooperation.json';
-import Icon from '../common/Icon.astro';
-import ContactLinks from '../common/ContactLinks.astro';
+import site from "../../content/site.json";
+import services from "../../content/services.json";
+import rehabilitation from "../../content/rehabilitation.json";
+import locations from "../../content/locations.json";
+import consultations from "../../content/consultations.json";
+import cooperation from "../../content/cooperation.json";
+import Icon from "../common/Icon.astro";
+import ContactLinks from "../common/ContactLinks.astro";
 const panels = [
-  { id: 'uslugi', label: 'Czym się zajmuję', title: services.heading, description: services.description, items: services.items, href: '#uslugi' },
-  { id: 'lokalizacje', label: 'Gdzie przyjmuję', title: locations.heading, description: locations.description, items: locations.items.map(item => ({ title: item.name, description: item.address })), href: '#lokalizacje' },
-  { id: 'rehabilitacja', label: 'Rehabilitacja', title: rehabilitation.heading, description: rehabilitation.description, items: rehabilitation.steps, href: '#rehabilitacja' },
-  ...consultations.map(item => ({ id: item.id, label: item.id === 'telekonsultacja' ? 'Telekonsultacja' : 'Wizyta domowa', title: item.heading, description: item.description, items: [], href: `#${item.id}` })),
-  { id: 'wspolpraca', label: 'Współpraca', title: cooperation.heading, description: cooperation.description, items: cooperation.items, href: '#wspolpraca' },
-  { id: 'kontakt', label: site.ui.contact, title: site.contact.heading, description: site.contact.description, items: [], href: '#kontakt' },
-  { id: 'rodo', label: 'RODO', title: site.ui.privacy, description: 'Treść polityki prywatności do uzupełnienia i akceptacji przez właściciela strony.', items: [], href: '/rodo/' },
+  {
+    id: "uslugi",
+    label: "Czym się zajmuję",
+    title: services.heading,
+    description: services.description,
+    items: services.items,
+    href: "#uslugi",
+  },
+  {
+    id: "lokalizacje",
+    label: "Gdzie przyjmuję",
+    title: locations.heading,
+    description: locations.description,
+    items: locations.items.map((item) => ({ title: item.name, description: item.address })),
+    href: "#lokalizacje",
+  },
+  {
+    id: "rehabilitacja",
+    label: "Rehabilitacja",
+    title: rehabilitation.heading,
+    description: rehabilitation.description,
+    items: rehabilitation.steps,
+    href: "#rehabilitacja",
+  },
+  ...consultations.map((item) => ({
+    id: item.id,
+    label: item.id === "telekonsultacja" ? "Telekonsultacja" : "Wizyta domowa",
+    title: item.heading,
+    description: item.description,
+    items: [],
+    href: `#${item.id}`,
+  })),
+  {
+    id: "wspolpraca",
+    label: "Współpraca",
+    title: cooperation.heading,
+    description: cooperation.description,
+    items: cooperation.items,
+    href: "#wspolpraca",
+  },
+  {
+    id: "kontakt",
+    label: site.ui.contact,
+    title: site.contact.heading,
+    description: site.contact.description,
+    items: [],
+    href: "#kontakt",
+  },
+  {
+    id: "rodo",
+    label: "RODO",
+    title: site.ui.privacy,
+    description:
+      "Treść polityki prywatności do uzupełnienia i akceptacji przez właściciela strony.",
+    items: [],
+    href: "/rodo/",
+  },
 ];
 ---
+
 <section id="hero-panel" class="hero-panel" aria-label="Menu wizytówki" hidden>
-  <div class="panel-top"><span class="eyebrow">{site.name}</span><button class="icon-button" data-panel-close aria-label={site.ui.close}><Icon name="close" /></button></div>
-  <div class="panel-tabs" role="tablist" aria-label="Wybierz temat">{panels.map((panel, i) => <button id={`tab-${panel.id}`} role="tab" type="button" aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`panel-${panel.id}`} tabindex={i === 0 ? 0 : -1} data-panel-tab={panel.id}>{panel.label}</button>)}</div>
-  {panels.map((panel, i) => <div id={`panel-${panel.id}`} role="tabpanel" aria-labelledby={`tab-${panel.id}`} tabindex="0" hidden={i !== 0} class="panel-content">
-    <h2>{panel.title}</h2><p>{panel.description}</p>
-    {panel.items.length > 0 && <ul class="panel-items">{panel.items.map(item => <li><strong>{item.title}</strong><p>{item.description}</p></li>)}</ul>}
-    {panel.id === 'kontakt' && <ContactLinks compact />}
-    <a class="button" href={panel.href} data-panel-link>{site.ui.details}<Icon /></a>
-  </div>)}
+  <div class="panel-top">
+    <span class="eyebrow">{site.name}</span><button
+      class="icon-button"
+      data-panel-close
+      aria-label={site.ui.close}><Icon name="close" /></button>
+  </div>
+  <div class="panel-tabs" role="tablist" aria-label="Wybierz temat">
+    {
+      panels.map((panel, i) => (
+        <button
+          id={`tab-${panel.id}`}
+          role="tab"
+          type="button"
+          aria-selected={i === 0 ? "true" : "false"}
+          aria-controls={`panel-${panel.id}`}
+          tabindex={i === 0 ? 0 : -1}
+          data-panel-tab={panel.id}
+        >
+          {panel.label}
+        </button>
+      ))
+    }
+  </div>
+  {
+    panels.map((panel, i) => (
+      <div
+        id={`panel-${panel.id}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${panel.id}`}
+        tabindex="0"
+        hidden={i !== 0}
+        class="panel-content"
+      >
+        <>
+          <h2>{panel.title}</h2>
+          <p>{panel.description}</p>
+        </>
+        {panel.items.length > 0 && (
+          <ul class="panel-items">
+            {panel.items.map((item) => (
+              <li>
+                <strong>{item.title}</strong>
+                <p>{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+        {panel.id === "kontakt" && <ContactLinks compact />}
+        <a class="button" href={panel.href} data-panel-link>
+          {site.ui.details}
+          <Icon />
+        </a>
+      </div>
+    ))
+  }
 </section>
-<script>import '../../scripts/heroPanel';</script>
+<script>
+  import "../../scripts/heroPanel";
+</script>

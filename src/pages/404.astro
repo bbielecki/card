@@ -1,5 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import site from '../content/site.json';
+import Layout from "../layouts/Layout.astro";
+import site from "../content/site.json";
 ---
-<Layout title={`Nie znaleziono strony — ${site.name}`} noindex><div class="container section legal-content"><p class="eyebrow">404</p><h1>Nie znaleziono strony.</h1><a class="button" href="/">{site.ui.back}</a></div></Layout>
+
+<Layout title={`Nie znaleziono strony — ${site.name}`} noindex
+  ><div class="container section legal-content">
+    <p class="eyebrow">404</p><h1>Nie znaleziono strony.</h1><a class="button" href="/"
+      >{site.ui.back}</a>
+  </div></Layout
+>

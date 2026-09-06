@@ -4,21 +4,21 @@
 
 ## Wyniki
 
-| Sprawdzenie | Wynik |
-| --- | --- |
-| `npm run check` | 0 błędów, 0 ostrzeżeń, 0 uwag |
-| `npm run build` | Poprawna statyczna kompilacja strony głównej, RODO, 404, robots i sitemap |
-| Playwright, podgląd deweloperski | 11/11 testów zaliczonych |
-| Playwright, produkcyjne `dist` na porcie 4322 | 11/11 testów zaliczonych |
-| 360, 390, 430, 768, 1024, 1440 px | Sekcje widoczne, bez poziomego przewijania |
-| axe WCAG 2 A/AA i 2.1 AA | Brak automatycznie wykrytych naruszeń na badanych szerokościach, w ośmiu zakładkach i na RODO |
-| Hero | Zakładki, strzałki, Home/End, Escape, zamknięcie przyciskiem i tłem, powrót fokusu oraz przejście do sekcji działają |
-| Mobile | Menu, Escape, kotwice, dolny pasek, przejście z otwartego panelu desktopowego działają |
-| Bez JavaScriptu | Treść i nawigacja dostępne, skróty przewijają do sekcji |
-| Reduced motion | Brak animacji panelu i przejść portretu |
-| Linki i metadane | Jeden H1, język polski, title/description/OG, poprawne kotwice, brak pustych tel/mailto, RODO i 404 działają |
-| Materiały SEO | Favicon SVG, lokalna grafika OG PNG, robots i sitemap dostępne; noindex wersji roboczej |
-| Przegląd wizualny | Sprawdzone zrzuty desktop i mobile oraz pierwsze ekrany 1440 i 390 px |
+| Sprawdzenie                                   | Wynik                                                                                                                |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `npm run check`                               | 0 błędów, 0 ostrzeżeń, 0 uwag                                                                                        |
+| `npm run build`                               | Poprawna statyczna kompilacja strony głównej, RODO, 404, robots i sitemap                                            |
+| Playwright, podgląd deweloperski              | 11/11 testów zaliczonych                                                                                             |
+| Playwright, produkcyjne `dist` na porcie 4322 | 11/11 testów zaliczonych                                                                                             |
+| 360, 390, 430, 768, 1024, 1440 px             | Sekcje widoczne, bez poziomego przewijania                                                                           |
+| axe WCAG 2 A/AA i 2.1 AA                      | Brak automatycznie wykrytych naruszeń na badanych szerokościach, w ośmiu zakładkach i na RODO                        |
+| Hero                                          | Zakładki, strzałki, Home/End, Escape, zamknięcie przyciskiem i tłem, powrót fokusu oraz przejście do sekcji działają |
+| Mobile                                        | Menu, Escape, kotwice, dolny pasek, przejście z otwartego panelu desktopowego działają                               |
+| Bez JavaScriptu                               | Treść i nawigacja dostępne, skróty przewijają do sekcji                                                              |
+| Reduced motion                                | Brak animacji panelu i przejść portretu                                                                              |
+| Linki i metadane                              | Jeden H1, język polski, title/description/OG, poprawne kotwice, brak pustych tel/mailto, RODO i 404 działają         |
+| Materiały SEO                                 | Favicon SVG, lokalna grafika OG PNG, robots i sitemap dostępne; noindex wersji roboczej                              |
+| Przegląd wizualny                             | Sprawdzone zrzuty desktop i mobile oraz pierwsze ekrany 1440 i 390 px                                                |
 
 Środowisko: Windows, Node 22.17.0, Edge/Chromium headless. Zależność `undici` wymaga Node >=22.19.0; pomimo ostrzeżenia instalacyjnego lokalne kontrole i testy przeszły. Projekt deklaruje >=22.19.0, a konfiguracja Netlify wybiera 22.22.0.
 

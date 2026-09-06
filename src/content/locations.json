@@ -5,6 +5,13 @@
   "mapLabel": "Pokaż trasę",
   "mapPending": "Mapa będzie dostępna po potwierdzeniu adresu.",
   "items": [
-    { "id": "gabinet", "name": "Wizyta w gabinecie", "address": "Lokalizacja i adres do potwierdzenia", "description": "Przyjęcia po wcześniejszym ustaleniu terminu. Szczegóły gabinetu zostaną uzupełnione.", "googleMapsUrl": "", "embedUrl": "" }
+    {
+      "id": "gabinet",
+      "name": "Wizyta w gabinecie",
+      "address": "Lokalizacja i adres do potwierdzenia",
+      "description": "Przyjęcia po wcześniejszym ustaleniu terminu. Szczegóły gabinetu zostaną uzupełnione.",
+      "googleMapsUrl": "",
+      "embedUrl": ""
+    }
   ]
 }

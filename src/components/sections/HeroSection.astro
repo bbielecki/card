@@ -1,36 +1,131 @@
 ---
-import site from '../../content/site.json';
-import Icon from '../common/Icon.astro';
-import Photo from '../common/Photo.astro';
-import HeroInteractivePanel from '../interactive/HeroInteractivePanel.astro';
+import site from "../../content/site.json";
+import Icon from "../common/Icon.astro";
+import Photo from "../common/Photo.astro";
+import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
 ---
+
 <section class="hero" aria-labelledby="hero-title" id="start">
   <div class="hero-stage">
-  <div class="container hero-main">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="status-dot"></span>{site.hero.eyebrow}</p>
-      <p class="hero-name">{site.name} <span>/ {site.title}</span></p>
-      <h1 id="hero-title">{site.hero.headline.map((line, i) => <span class:list={{ 'text-accent': i === 2 }}>{line}</span>)}</h1>
-      <p class="hero-intro">{site.hero.intro}</p>
-      <div class="hero-actions"><a class="button" href="#kontakt">{site.ui.appointment}<Icon /></a><a class="text-link" href="#o-mnie">{site.hero.secondaryCta}<span aria-hidden="true">↘</span></a></div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-background" aria-hidden="true"><Photo file={site.hero.background} alt="" priority /></div>
-      <div class="hero-orbit" aria-hidden="true"></div>
-      <div class="hero-portrait">
-        {site.hero.portrait ? <Photo file={site.hero.portrait} alt={site.hero.portraitAlt} priority /> : <div class="portrait-placeholder">
-          <svg viewBox="0 0 400 500" width="400" height="500" fill="none" aria-hidden="true"><path d="M66 500V399c0-75 60-123 134-123s134 48 134 123v101" fill="url(#body)"/><ellipse cx="200" cy="176" rx="73" ry="88" fill="url(#head)"/><path d="m140 300 60 76 60-76M200 376v124" stroke="#9db5ca" stroke-opacity=".3"/><defs><linearGradient id="body" x1="66" y1="276" x2="330" y2="500" gradientUnits="userSpaceOnUse"><stop stop-color="#55718b"/><stop offset="1" stop-color="#223c55"/></linearGradient><linearGradient id="head" x1="127" y1="88" x2="273" y2="264" gradientUnits="userSpaceOnUse"><stop stop-color="#8a9eae"/><stop offset="1" stop-color="#4a657d"/></linearGradient></defs></svg>
-          <span class="photo-placeholder-label">{site.ui.photoPlaceholder}</span>
-        </div>}
+    <div class="container hero-main">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span>{site.hero.eyebrow}</p>
+        <p class="hero-name">{site.name} <span>/ {site.title}</span></p>
+        <h1 id="hero-title">
+          {
+            site.hero.headline.map((line, i) => (
+              <span class:list={{ "text-accent": i === 2 }}>{line}</span>
+            ))
+          }
+        </h1>
+        <p class="hero-intro">{site.hero.intro}</p>
+        <div class="hero-actions">
+          <a class="button" href="#kontakt">{site.ui.appointment}<Icon /></a><a
+            class="text-link"
+            href="#o-mnie">{site.hero.secondaryCta}<span aria-hidden="true">↘</span></a>
+        </div>
       </div>
-      <button type="button" class="hero-pin" data-hero-reveal aria-expanded="false" aria-controls="hero-panel" aria-label={site.hero.revealLabel} hidden><Icon name="pin" /></button>
-      <a class="hero-pin hero-pin-fallback" href="#hero-shortcuts" aria-label={site.hero.revealLabel}><Icon name="pin" /></a>
-      <div class="portrait-caption"><span class="caption-cross" aria-hidden="true">+</span><div><strong>{site.name}</strong><span>{site.hero.caption}</span></div></div>
-      <span class="visual-label" aria-hidden="true">FIZJOTERAPIA & REHABILITACJA</span>
+      <div class="hero-visual">
+        <div class="hero-background" aria-hidden="true">
+          <Photo file={site.hero.background} alt="" priority />
+        </div>
+        <div class="hero-orbit" aria-hidden="true"></div>
+        <div class="hero-portrait">
+          {
+            site.hero.portrait ? (
+              <Photo file={site.hero.portrait} alt={site.hero.portraitAlt} priority />
+            ) : (
+              <div class="portrait-placeholder">
+                <svg viewBox="0 0 400 500" width="400" height="500" fill="none" aria-hidden="true">
+                  <>
+                    <path
+                      d="M66 500V399c0-75 60-123 134-123s134 48 134 123v101"
+                      fill="url(#body)"
+                    />
+                    <ellipse cx="200" cy="176" rx="73" ry="88" fill="url(#head)" />
+                    <path
+                      d="m140 300 60 76 60-76M200 376v124"
+                      stroke="#9db5ca"
+                      stroke-opacity=".3"
+                    />
+                    <defs>
+                      <>
+                        <linearGradient
+                          id="body"
+                          x1="66"
+                          y1="276"
+                          x2="330"
+                          y2="500"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <>
+                            <stop stop-color="#55718b" />
+                            <stop offset="1" stop-color="#223c55" />
+                          </>
+                        </linearGradient>
+                        <linearGradient
+                          id="head"
+                          x1="127"
+                          y1="88"
+                          x2="273"
+                          y2="264"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <>
+                            <stop stop-color="#8a9eae" />
+                            <stop offset="1" stop-color="#4a657d" />
+                          </>
+                        </linearGradient>
+                      </>
+                    </defs>
+                  </>
+                </svg>
+                <span class="photo-placeholder-label">{site.ui.photoPlaceholder}</span>
+              </div>
+            )
+          }
+        </div>
+        <button
+          type="button"
+          class="hero-pin"
+          data-hero-reveal
+          aria-expanded="false"
+          aria-controls="hero-panel"
+          aria-label={site.hero.revealLabel}
+          hidden><Icon name="pin" /></button
+        >
+        <a
+          class="hero-pin hero-pin-fallback"
+          href="#hero-shortcuts"
+          aria-label={site.hero.revealLabel}><Icon name="pin" /></a
+        >
+        <div class="portrait-caption">
+          <span class="caption-cross" aria-hidden="true">+</span><div>
+            <strong>{site.name}</strong><span>{site.hero.caption}</span>
+          </div>
+        </div>
+        <span class="visual-label" aria-hidden="true">FIZJOTERAPIA & REHABILITACJA</span>
+      </div>
     </div>
-  </div>
-  <p class="hero-scroll-hint" hidden><span aria-hidden="true">↓</span>{site.hero.scrollHint}</p>
-  <div class="container hero-shortcuts" id="hero-shortcuts"><p>{site.hero.shortcutsLabel}<span aria-hidden="true">↘</span></p><div class="shortcut-grid">{site.hero.shortcuts.map((link, i) => <a href={`#${link.id}`}><span class="shortcut-number">0{i + 1}</span><Icon name={link.icon} /><span>{link.label}</span><span class="shortcut-plus" aria-hidden="true">+</span></a>)}</div></div>
-  <HeroInteractivePanel />
+    <p class="hero-scroll-hint" hidden><span aria-hidden="true">↓</span>{site.hero.scrollHint}</p>
+    <div class="container hero-shortcuts" id="hero-shortcuts">
+      <p>{site.hero.shortcutsLabel}<span aria-hidden="true">↘</span></p><div class="shortcut-grid">
+        {
+          site.hero.shortcuts.map((link, i) => (
+            <a href={`#${link.id}`}>
+              <>
+                <span class="shortcut-number">0{i + 1}</span>
+                <Icon name={link.icon} />
+                <span>{link.label}</span>
+                <span class="shortcut-plus" aria-hidden="true">
+                  +
+                </span>
+              </>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <HeroInteractivePanel />
   </div>
 </section>

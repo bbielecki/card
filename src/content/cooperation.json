@@ -3,9 +3,18 @@
   "heading": "Dobra opieka\nto praca zespołowa.",
   "description": "Przestrzeń do rozmowy o współpracy wokół zdrowia, ruchu i edukacji.",
   "items": [
-    { "title": "Kluby i zespoły sportowe", "description": "Porozmawiajmy o potrzebach zawodników i możliwościach wsparcia fizjoterapeutycznego." },
-    { "title": "Lekarze i specjaliści", "description": "Współpraca skoncentrowana na potrzebach pacjenta i ciągłości postępowania." },
-    { "title": "Edukacja i szkolenia", "description": "Zapytaj o możliwość współpracy przy inicjatywach związanych z fizjoterapią i ruchem." }
+    {
+      "title": "Kluby i zespoły sportowe",
+      "description": "Porozmawiajmy o potrzebach zawodników i możliwościach wsparcia fizjoterapeutycznego."
+    },
+    {
+      "title": "Lekarze i specjaliści",
+      "description": "Współpraca skoncentrowana na potrzebach pacjenta i ciągłości postępowania."
+    },
+    {
+      "title": "Edukacja i szkolenia",
+      "description": "Zapytaj o możliwość współpracy przy inicjatywach związanych z fizjoterapią i ruchem."
+    }
   ],
   "cta": "Porozmawiajmy o współpracy",
   "note": "Proponowane obszary współpracy do potwierdzenia."
