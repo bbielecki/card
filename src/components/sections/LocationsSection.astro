@@ -1,0 +1,7 @@
+---
+import data from '../../content/locations.json';
+import consultations from '../../content/consultations.json';
+import SectionHeader from '../common/SectionHeader.astro';
+import Icon from '../common/Icon.astro';
+---
+<section id="lokalizacje" class="section"><div class="container"><SectionHeader {...data} /><div class="location-grid">{data.items.map(location => <article class="location-card"><span class="icon-tile"><Icon name="pin" /></span><h3>{location.name}</h3><p class="location-address">{location.address}</p><p>{location.description}</p>{location.googleMapsUrl ? <a class="button" href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">{data.mapLabel}<Icon /></a> : <p class="editorial-note">{data.mapPending}</p>}</article>)}<div class="location-alternatives">{consultations.map(item => <a href={`#${item.id}`}><Icon name={item.icon} /><span><strong>{item.eyebrow.replace('05 / ', '')}</strong><span>{item.cta}</span></span><Icon /></a>)}</div></div></div></section>

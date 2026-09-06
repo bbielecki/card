@@ -1,0 +1,76 @@
+{
+  "name": "dr Łukasz Wilgocki",
+  "title": "Fizjoterapeuta",
+  "isDraft": true,
+  "description": "Poznaj dr. Łukasza Wilgockiego. Fizjoterapia, rehabilitacja i indywidualne podejście do powrotu do sprawności. Gabinet, telekonsultacje i wizyty domowe.",
+  "phone": "",
+  "email": "",
+  "instagramUrl": "",
+  "navigation": [
+    { "label": "O mnie", "href": "#o-mnie" },
+    { "label": "Jak pomagam", "href": "#uslugi" },
+    { "label": "Gdzie przyjmuję", "href": "#lokalizacje" }
+  ],
+  "ui": {
+    "contact": "Kontakt",
+    "appointment": "Umów wizytę",
+    "call": "Zadzwoń",
+    "email": "Napisz wiadomość",
+    "instagram": "Instagram",
+    "menu": "Menu",
+    "close": "Zamknij panel",
+    "skip": "Przejdź do treści",
+    "privacy": "Polityka prywatności / RODO",
+    "back": "Wróć na stronę główną",
+    "draft": "Wersja poglądowa · treści i dane oczekują na potwierdzenie",
+    "details": "Dowiedz się więcej",
+    "photoPlaceholder": "Miejsce na zdjęcie dr. Łukasza Wilgockiego",
+    "workPlaceholder": "Miejsce na zdjęcie z pracy w gabinecie",
+    "footer": "Fizjoterapia. Z myślą o Tobie.",
+    "copyright": "Wszelkie prawa zastrzeżone."
+  },
+  "hero": {
+    "eyebrow": "FIZJOTERAPIA Z UWAŻNOŚCIĄ",
+    "headline": ["Twój ruch.", "Twoja sprawność.", "Nasza współpraca."],
+    "intro": "Pomagam wracać do swobodnego ruchu. Z uważnością na Twoje potrzeby i planem dopasowanym do Twojej codzienności.",
+    "secondaryCta": "Poznaj moje podejście",
+    "portrait": "test_image_person.jpg",
+    "portraitAlt": "Mężczyzna siedzący przy stoliku",
+    "background": "test_image_office.jpg",
+    "backgroundAlt": "Dwie osoby na tle jeziora i wodospadów",
+    "caption": "Człowiek. Ruch. Indywidualne podejście.",
+    "shortcutsLabel": "Odkryj, jak mogę Ci pomóc",
+    "revealLabel": "Otwórz menu wizytówki",
+    "scrollHint": "Przewiń w dół lub kliknij pinezkę",
+    "shortcuts": [
+      { "id": "uslugi", "label": "Czym się zajmuję", "icon": "activity" },
+      { "id": "lokalizacje", "label": "Gdzie przyjmuję", "icon": "pin" },
+      { "id": "rehabilitacja", "label": "Rehabilitacja", "icon": "arrow" },
+      { "id": "kontakt", "label": "Porozmawiajmy", "icon": "message" }
+    ]
+  },
+  "about": {
+    "eyebrow": "01 / O MNIE",
+    "heading": "Za każdą terapią stoi człowiek.",
+    "lead": "Dobra współpraca zaczyna się od rozmowy.",
+    "paragraphs": [
+      "Nazywam się Łukasz Wilgocki. Jestem fizjoterapeutą. W swojej pracy stawiam na uważne słuchanie, zrozumienie potrzeb i wspólne określenie celu terapii.",
+      "Chcę, abyś rozumiał, nad czym pracujemy i jaką rolę możesz odegrać w powrocie do sprawności. Plan postępowania dopasowujemy do Twoich możliwości i codziennej aktywności."
+    ],
+    "values": ["Indywidualne podejście", "Jasny plan działania", "Wspólnie ustalony cel"],
+    "note": "Wstępny opis do akceptacji. Informacje o wykształceniu i doświadczeniu zostaną uzupełnione."
+  },
+  "contact": {
+    "eyebrow": "07 / KONTAKT",
+    "heading": "Zróbmy pierwszy krok.",
+    "description": "Chcesz zapytać o wizytę lub wybrać formę konsultacji? Porozmawiajmy o Twoich potrzebach.",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-mail",
+    "socialLabel": "Bądźmy w kontakcie",
+    "phonePending": "Numer telefonu do uzupełnienia",
+    "emailPending": "Adres e-mail do uzupełnienia",
+    "socialPending": "Profil Instagram do uzupełnienia",
+    "pending": "Dane kontaktowe pojawią się po potwierdzeniu przez właściciela. Umawianie wizyt nie jest jeszcze dostępne w tej wersji.",
+    "locationsLink": "Sprawdź miejsca i formy wizyt"
+  }
+}

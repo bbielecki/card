@@ -1,0 +1,11 @@
+{
+  "eyebrow": "03 / REHABILITACJA",
+  "heading": "Krok po kroku.\nW Twoim tempie.",
+  "description": "Przejrzysty proces, w którym jest miejsce na pytania, informację zwrotną i dostosowanie planu.",
+  "steps": [
+    { "title": "Poznajemy problem", "description": "Zaczynamy od rozmowy o dolegliwościach, Twojej codzienności i celach oraz oceny funkcjonalnej." },
+    { "title": "Ustalamy plan", "description": "Omawiamy możliwe kierunki pracy i wspólnie określamy kolejne kroki." },
+    { "title": "Pracujemy razem", "description": "Łączymy terapię z ćwiczeniami dobranymi do aktualnych możliwości. Na bieżąco oceniamy postępy." },
+    { "title": "Wracasz do aktywności", "description": "Dostosowujemy obciążenia i omawiamy, jak kontynuować pracę nad sprawnością na co dzień." }
+  ]
+}

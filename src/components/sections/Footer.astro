@@ -1,0 +1,7 @@
+---
+import site from '../../content/site.json';
+import Icon from '../common/Icon.astro';
+const isHome = Astro.url.pathname === '/';
+---
+<footer class="site-footer"><div class="container"><div class="footer-top"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ŁW<span>+</span></span><span class="brand-copy">{site.name}<small>{site.ui.footer}</small></span></a><a href="/rodo/">{site.ui.privacy}<span aria-hidden="true"> ↗</span></a></div><div class="footer-bottom"><span>© {new Date().getFullYear()} {site.name}. {site.ui.copyright}</span>{site.isDraft && <span>{site.ui.draft}</span>}</div></div></footer>
+{isHome && <div class="mobile-cta"><a class="button" href={site.phone ? `tel:${site.phone.replace(/[^+\d]/g, '')}` : '#kontakt'}><Icon name={site.phone ? 'phone' : 'message'} />{site.phone ? site.ui.call : site.ui.contact}</a><a href="#lokalizacje"><Icon name="pin" />{site.navigation[2].label}</a></div>}

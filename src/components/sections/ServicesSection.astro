@@ -1,0 +1,7 @@
+---
+import data from '../../content/services.json';
+import site from '../../content/site.json';
+import SectionHeader from '../common/SectionHeader.astro';
+import Icon from '../common/Icon.astro';
+---
+<section id="uslugi" class="section section--soft"><div class="container"><SectionHeader {...data} /><div class="service-grid">{data.items.map((item, i) => <article class="service-card"><div class="card-top"><span class="icon-tile"><Icon name={item.icon} /></span><span class="item-number">0{i + 1}</span></div><h3>{item.title}</h3><p>{item.description}</p><a href="#kontakt" class="card-link" aria-label={`${site.ui.contact}: ${item.title}`}><Icon /></a></article>)}</div>{site.isDraft && <p class="editorial-note">{data.note}</p>}</div></section>

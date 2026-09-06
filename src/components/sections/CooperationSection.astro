@@ -1,0 +1,7 @@
+---
+import data from '../../content/cooperation.json';
+import site from '../../content/site.json';
+import SectionHeader from '../common/SectionHeader.astro';
+import Icon from '../common/Icon.astro';
+---
+<section id="wspolpraca" class="section cooperation-section"><div class="container cooperation-grid"><div><SectionHeader {...data} /><a class="button button--light" href="#kontakt">{data.cta}<Icon /></a></div><div class="cooperation-items">{data.items.map(item => <article><h3>{item.title}</h3><p>{item.description}</p></article>)}{site.isDraft && <p class="editorial-note">{data.note}</p>}</div></div></section>

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "telekonsultacja", "icon": "video", "eyebrow": "05 / TELEKONSULTACJA", "heading": "Porozmawiajmy.\nTakże na odległość.",
+    "description": "Konsultacja online to przestrzeń na rozmowę o Twoich potrzebach i omówienie dalszego postępowania, kiedy spotkanie w gabinecie jest utrudnione.",
+    "points": ["Dla osób, które chcą omówić swój problem lub dotychczasowy plan ćwiczeń.", "Termin i sposób połączenia ustalamy indywidualnie przed konsultacją.", "Jeśli potrzebne jest badanie na miejscu, ustalamy możliwość wizyty stacjonarnej."],
+    "note": "Szczegółowy zakres i dostępność telekonsultacji do potwierdzenia.",
+    "cta": "Zapytaj o telekonsultację"
+  },
+  {
+    "id": "wizyta-domowa", "icon": "home", "eyebrow": "WIZYTA DOMOWA", "heading": "Wsparcie bliżej Ciebie.",
+    "description": "Gdy dojazd do gabinetu jest trudny, możliwe jest ustalenie wizyty w domu. Formę spotkania dopasowujemy do sytuacji i potrzeb pacjenta.",
+    "points": ["Dla osób z ograniczoną możliwością dotarcia do gabinetu.", "Przed wizytą omawiamy potrzeby, warunki spotkania i dostępność terminu.", "Obszar dojazdu i szczegóły organizacyjne do potwierdzenia."],
+    "note": "Możliwość wizyty domowej ustalana indywidualnie.",
+    "cta": "Zapytaj o wizytę domową"
+  }
+]

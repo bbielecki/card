@@ -1,0 +1,123 @@
+// The original flowing hero remains the fallback when JavaScript is unavailable.
+.has-interactive-hero {
+  --hero-header-height: 88px;
+
+  &:not(.hero-revealed) {
+    #main-navigation, .menu-toggle, .mobile-cta { visibility: hidden; pointer-events: none; }
+  }
+}
+
+.hero.is-enhanced {
+  padding: 0;
+  min-height: calc(160svh - var(--hero-header-height));
+
+  .hero-stage {
+    position: sticky;
+    top: var(--hero-header-height);
+    min-height: calc(100svh - var(--hero-header-height));
+    background: linear-gradient(105deg, #f4f7fa, #e7eef4);
+  }
+
+  .hero-main {
+    grid-template-columns: .76fr 1.24fr;
+    gap: 30px;
+    min-height: calc(100svh - var(--hero-header-height));
+    padding-block: 28px 56px;
+  }
+
+  .hero-copy { min-width: 0; padding: 0; }
+  h1 { font-size: clamp(36px, 3.4vw, 50px); }
+  .hero-intro { max-width: 350px; }
+  .hero-actions, .hero-shortcuts, .hero-pin-fallback { display: none; }
+  .hero-visual { height: max(540px, calc(100svh - var(--hero-header-height) - 84px)); }
+  .hero-background { transition: transform .45s ease; }
+  .hero-background img { transition: opacity .45s ease; }
+  .hero-pin { z-index: 4; width: 66px; height: 66px; color: #0b1f3a; }
+  .hero-scroll-hint {
+    position: absolute;
+    inset: auto 20px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: #476780;
+  }
+  .hero-scroll-hint > span { font-size: 20px; }
+  &.is-panel-open {
+    .hero-background img { opacity: .75; }
+    .hero-background { transform: scale(1.015); }
+    .hero-scroll-hint { visibility: hidden; }
+  }
+}
+
+@media (max-width: 1023px) {
+  .has-interactive-hero { --hero-header-height: 78px; }
+  .hero.is-enhanced {
+    .hero-main { grid-template-columns: .8fr 1.2fr; }
+    h1 { font-size: 36px; }
+    .hero-panel { right: 32px; width: 530px; max-width: calc(100% - 64px); }
+  }
+}
+
+@media (max-width: 767px) {
+  .has-interactive-hero { --hero-header-height: 73px; }
+  .has-interactive-hero #main-navigation {
+    position: absolute;
+    inset: 100% 0 auto;
+    width: 100%;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #dce3ea;
+  }
+  .hero.is-enhanced {
+    .hero-stage { min-height: 0; }
+    .hero-main {
+      position: relative;
+      display: block;
+      width: calc(100% - 24px);
+      height: max(620px, calc(100svh - var(--hero-header-height)));
+      min-height: 0;
+      padding: 14px 0 50px;
+    }
+    .hero-visual { width: 100%; max-width: none; height: 100%; margin: 0; }
+    .hero-portrait { inset: 0; border-radius: 180px 180px 6px 6px; }
+    .hero-background { inset: 12px 0 0; }
+    .hero-orbit { inset: 0 8px 0; }
+    .hero-copy {
+      position: absolute;
+      z-index: 3;
+      inset: auto 0 48px;
+      padding: 45px 20px 20px;
+      background: linear-gradient(transparent, rgba(247, 249, 252, .97) 24%);
+      border-radius: 0 0 6px 6px;
+      transition: opacity .3s ease;
+    }
+    .hero-copy .eyebrow, .portrait-caption, .visual-label { display: none; }
+    .hero-name { margin-bottom: 10px; font-size: 12px; }
+    h1 { font-size: clamp(26px, 7.2vw, 38px); }
+    .hero-intro { margin-top: 12px; font-size: 12px; line-height: 1.65; max-width: 390px; }
+    .hero-pin { right: 2px; top: 22%; width: 62px; height: 62px; }
+    .hero-panel {
+      inset: 14px 12px auto;
+      width: auto;
+      max-width: none;
+      max-height: calc(100svh - var(--hero-header-height) - 108px - env(safe-area-inset-bottom));
+      padding: 18px;
+    }
+    .panel-top { margin-bottom: 12px; }
+    .panel-tabs { gap: 6px; margin-bottom: 20px; }
+    .panel-tabs button { min-height: 44px; font-size: 11px; }
+    .panel-content h2 { font-size: 26px; }
+    .panel-content > p, .panel-items p { font-size: 13px; }
+    .hero-scroll-hint { font-size: 10px; bottom: 12px; gap: 8px; }
+    &.is-panel-open .hero-copy { opacity: 0; visibility: hidden; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero.is-enhanced *, .hero.is-enhanced *::before, .hero.is-enhanced *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

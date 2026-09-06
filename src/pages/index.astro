@@ -1,11 +1,23 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import HeroSection from '../components/sections/HeroSection.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
+import ServicesSection from '../components/sections/ServicesSection.astro';
+import RehabilitationSection from '../components/sections/RehabilitationSection.astro';
+import LocationsSection from '../components/sections/LocationsSection.astro';
+import ConsultationSection from '../components/sections/ConsultationSection.astro';
+import CooperationSection from '../components/sections/CooperationSection.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+import consultations from '../content/consultations.json';
 ---
 
 <Layout>
-	<Welcome />
+  <HeroSection />
+  <AboutSection />
+  <ServicesSection />
+  <RehabilitationSection />
+  <LocationsSection />
+  {consultations.map(consultation => <ConsultationSection consultation={consultation} />)}
+  <CooperationSection />
+  <ContactSection />
 </Layout>
