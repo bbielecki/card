@@ -39,8 +39,7 @@
     "shortcutsLabel": "Odkryj, jak mogę Ci pomóc",
     "revealLabel": "Otwórz menu wizytówki",
     "scrollHint": "Przewiń w dół lub kliknij pinezkę",
-    "desktopScrollHint": "Przewiń w dół, aby poznać szczegóły",
-    "mapPinLabel": "Przejdź do kontaktu i gabinetu",
+    "desktopScrollHint": "Przewiń w dół lub kliknij pinezkę",
     "shortcuts": [
       { "id": "uslugi", "label": "Czym się zajmuję", "icon": "activity" },
       { "id": "kontakt", "label": "Kontakt i gabinet", "icon": "pin" },
@@ -60,7 +59,7 @@
     "note": "Wstępny opis do akceptacji. Informacje o wykształceniu i doświadczeniu zostaną uzupełnione."
   },
   "contact": {
-    "eyebrow": "03 / KONTAKT I GABINET",
+    "eyebrow": "02 / KONTAKT I GABINET",
     "heading": "Porozmawiajmy.\nSprawdź, gdzie przyjmuję.",
     "description": "Tutaj znajdziesz dane kontaktowe i adres gabinetu. Wybierz dogodną formę wizyty i skontaktuj się w sprawie terminu.",
     "phoneLabel": "Rejestracja do gabinetu",

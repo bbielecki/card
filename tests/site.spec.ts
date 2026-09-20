@@ -158,7 +158,7 @@ test("ograniczenie animacji jest respektowane", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 390, height: 1000 });
   await page.goto("/");
-  await page.locator("[data-hero-menu]").click();
+  await page.locator(".hero-pin[data-hero-menu]").click();
   expect(
     await page.locator("#hero-panel").evaluate((element) => getComputedStyle(element).animationName)
   ).toBe("none");
@@ -242,6 +242,13 @@ for (const width of [390, 1440]) {
     await expect.poll(async () => (await scene.boundingBox())!.height).toBeLessThan(2);
     await page.evaluate(() => window.scrollTo({ top: 850, behavior: "instant" }));
     await expect(page.locator("html")).toHaveClass(/menu-docked/);
+    const portraitState = await page.locator(".hero-visual").evaluate((element) => ({
+      opacity: Number(getComputedStyle(element).opacity),
+      height: element.getBoundingClientRect().height,
+    }));
+    expect(portraitState.opacity).toBeGreaterThan(0.2);
+    expect(portraitState.opacity).toBeLessThan(0.6);
+    expect(portraitState.height).toBeGreaterThan(500);
     await expect(page.locator(".site-header")).toBeHidden();
     await expect(page.locator(".hero-menu-brand")).toBeVisible();
     expect((await page.locator(".hero-menu-bar").boundingBox())!.y).toBe(0);
@@ -271,7 +278,7 @@ for (const width of [390, 1440]) {
       ).toEqual([]);
     }
     await page.locator("#tab-uslugi").focus();
-    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("ArrowLeft");
     await expect(page.locator("#panel-kontakt")).toBeVisible();
     await page.keyboard.press("End");
     await expect(page.locator("#panel-rodo")).toBeVisible();
@@ -287,17 +294,21 @@ for (const width of [390, 1440]) {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await expect(panel).toBeHidden();
     await expect.poll(async () => (await scene.boundingBox())!.height).toBeGreaterThan(800);
+    await page.locator(".hero-pin[data-hero-menu]").click();
+    await expect(panel).toBeVisible();
+    await expect(panel.getByRole("tab").first()).toHaveAttribute("id", "tab-kontakt");
+    await expect(page.locator("#tab-kontakt")).toBeFocused();
+    await expect(page.locator("#panel-kontakt")).toBeVisible();
+    await expect(page.locator("html")).toHaveClass(/menu-docked/);
   });
 }
 
 test("desktop: kontakt rozdziela gabinet i konsultacje online", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
-  const mapPin = page.getByRole("link", { name: site.hero.mapPinLabel });
-  await expect(mapPin).toBeInViewport();
-  await expect(mapPin).toHaveAttribute("href", "#kontakt");
-  await mapPin.click();
-  await expect(page).toHaveURL(/#kontakt$/);
+  await page.evaluate(() =>
+    document.getElementById("kontakt")!.scrollIntoView({ behavior: "instant" })
+  );
   await expect(page.locator("#kontakt")).toBeInViewport();
   await expect(page.locator("section#kontakt")).toHaveCount(1);
   await expect(page.locator("section#lokalizacje, #tab-lokalizacje")).toHaveCount(0);
@@ -321,9 +332,9 @@ test("desktop: klawiatura może przejść od zdjęcia do menu", async ({ page })
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await page.locator("[data-hero-menu]").focus();
+  await page.locator(".hero-menu-hint[data-hero-menu]").focus();
   await page.keyboard.press("Enter");
-  await expect(page.locator("#tab-uslugi")).toBeFocused();
+  await expect(page.locator("#tab-kontakt")).toBeFocused();
   await expect(page.locator(".hero-main")).toHaveAttribute("inert", "");
   await expect(page.locator("#hero-panel")).toBeVisible();
 });

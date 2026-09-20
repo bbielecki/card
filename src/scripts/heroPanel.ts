@@ -104,17 +104,20 @@ if (hero && panel) {
   hero.classList.add("is-enhanced");
   root.classList.add("has-interactive-hero");
   update();
-  hero.querySelector<HTMLAnchorElement>("[data-hero-menu]")?.addEventListener("click", (event) => {
-    event.preventDefault();
-    const { start, distance, headerHeight } = geometry();
-    focusMenu = true;
-    window.scrollTo({
-      top: start + distance + headerHeight + 1,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    });
-  });
+  hero.querySelectorAll<HTMLAnchorElement>("[data-hero-menu]").forEach((trigger) =>
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (trigger.dataset.heroMenu) select(trigger.dataset.heroMenu);
+      const { start, distance, headerHeight } = geometry();
+      focusMenu = true;
+      window.scrollTo({
+        top: start + distance + headerHeight + 1,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+    })
+  );
 
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => select(tab.dataset.panelTab!));

@@ -2,13 +2,13 @@
 
 Statyczne MVP w Astro + TypeScript + SCSS. Jedna strona z sekcjami, interaktywnym hero na desktopie, mobilną nawigacją i podstroną RODO.
 
-Na wszystkich ekranach przewijanie chowa zdjęcie i odsłania gradientem osiem zakładek pod nagłówkiem. Pinezka prowadzi do mapy. Zdjęcie na desktopie zajmuje 75% szerokości układu.
+Na wszystkich ekranach przewijanie zmniejsza i przygasza zdjęcie, pozostawiając je w tle menu odsłanianego gradientem. Pinezka również otwiera menu z sześcioma zakładkami. Zdjęcie na desktopie zajmuje 75% szerokości układu. Powrót na górę przywraca pełne zdjęcie. Bez JavaScript pinezka prowadzi do skrótów nawigacyjnych.
 
 Po dotarciu do górnej krawędzi menu z logo ŁW+ zastępuje nagłówek i pozostaje widoczne podczas dalszego przewijania.
 
 ## Uruchomienie
 
-Etap 5: jedyna lokalizacja to Centrum Medyczne Kalinowska — Legionowo, ul. Jana III Sobieskiego 43, 05-120 Legionowo. Dane edytuje się w `src/content/locations.json`. Sekcja nie zawiera mapy Google, odnośnika do mapy ani godzin przyjęć. Pinezka prowadzi do wspólnej sekcji „Kontakt i gabinet”.
+Etap 5: jedyna lokalizacja to Centrum Medyczne Kalinowska — Legionowo, ul. Jana III Sobieskiego 43, 05-120 Legionowo. Dane edytuje się w `src/content/locations.json`. Sekcja nie zawiera mapy Google, odnośnika do mapy ani godzin przyjęć. Kontakt i adres są dostępne we wspólnej sekcji „Kontakt i gabinet”.
 
 Kontakt po etapie 4: pole `phone` w `src/content/site.json` zawiera numer rejestracji do gabinetu (539 381 744), a `email` służy do zgłoszeń na konsultacje online. Numer jest zwykłym odnośnikiem telefonicznym, bez przycisku „Zadzwoń”. Przyciski „Napisz wiadomość” w sekcji kontaktu, podglądzie menu i mobilnym pasku kierują na skonfigurowany adres e-mail. Instagram nie jest wyświetlany.
 
