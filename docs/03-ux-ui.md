@@ -1,5 +1,7 @@
 # Kierunek wizualny i zachowanie
 
+Aktualizacja po odpowiedziach klienta, etap 2: kontakt i lokalizacja tworzą jedną sekcję „Kontakt i gabinet” (`#kontakt`), umieszczoną po usługach, przed rehabilitacją. Menu ma jedną wspólną zakładkę; podświetlenie scrolla śledzi całą połączoną sekcję. Dawna kotwica `#lokalizacje` pozostaje przy części z adresem, aby działały starsze linki. Dane kontaktowe są obok karty gabinetu na desktopie i pod nią na telefonie. Usunięcie mapy, Instagrama i aktualizacja telefonu należą do kolejnych etapów.
+
 Spokojny granat, biel, jasne niebieskoszare tła, lokalnie serwowany Manrope. Hero łączy krótką prezentację z miejscem na portret na tle zdjęcia gabinetu. Bez zdjęć widoczne są opisane grafiki zastępcze. Duże nagłówki, otwarte przestrzenie i numeracja porządkują dłuższą stronę.
 
 Desktop od 1024 px: zdjęcie zajmuje 75% szerokości układu pierwszego ekranu. Na wszystkich ekranach menu jest początkowo ukryte. Scroll zmniejsza wysokość zdjęcia, a osiem zakładek pod nim odsłania się gradientem i podjeżdża pod nagłówek. Menu jest częścią strony, bez popupu, przycisku zamykania i blokady przewijania. Powrót na górę odwraca efekt. Pinezka prowadzi do mapy. Link pod zdjęciem umożliwia przejście klawiaturą do menu. Nagłówek nie dubluje zakładek.

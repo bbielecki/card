@@ -1,32 +1,44 @@
 {
   "eyebrow": "02 / JAK POMAGAM",
   "heading": "Różne potrzeby.\nWspólny cel: sprawność.",
-  "description": "Od poznania problemu po pracę nad swobodą ruchu. Zakres i sposób postępowania ustalamy indywidualnie.",
-  "note": "Proponowany zakres usług — do potwierdzenia przez fizjoterapeutę.",
+  "description": "Rehabilitacja po urazach i operacjach, pomoc przy dolegliwościach bólowych oraz konsultacje online. Postępowanie dopasowujemy do Twoich potrzeb i możliwości.",
+  "note": "Zakres usług potwierdzony przez fizjoterapeutę. Krótkie opisy do akceptacji.",
   "items": [
     {
       "id": "ortopedia",
       "icon": "activity",
       "title": "Rehabilitacja ortopedyczna",
-      "description": "Wsparcie w powrocie do codziennych aktywności po urazach, przeciążeniach i zabiegach ortopedycznych."
+      "description": "Praca z osobami po urazach oraz z dolegliwościami stawów i mięśni. Indywidualny plan powrotu do codziennych aktywności."
     },
     {
-      "id": "sport",
-      "icon": "arrow",
-      "title": "Fizjoterapia sportowa",
-      "description": "Praca z osobami aktywnymi fizycznie. Indywidualne podejście do obciążeń i powrotu do sportu."
+      "id": "neurologia",
+      "icon": "activity",
+      "title": "Rehabilitacja neurologiczna",
+      "description": "Wsparcie osób z trudnościami ruchowymi związanymi z chorobami układu nerwowego. Cele i zakres terapii ustalamy indywidualnie."
     },
     {
-      "id": "diagnostyka",
-      "icon": "target",
-      "title": "Diagnostyka funkcjonalna",
-      "description": "Rozmowa i ocena ruchu, które pomagają zrozumieć trudności i zaplanować dalsze postępowanie."
-    },
-    {
-      "id": "terapia",
+      "id": "pooperacyjna",
       "icon": "hands",
-      "title": "Terapia i ćwiczenia",
-      "description": "Połączenie pracy w gabinecie z dobranymi ćwiczeniami i wskazówkami do codziennej aktywności."
+      "title": "Rehabilitacja pooperacyjna",
+      "description": "Przygotowanie do operacji ortopedycznej i rehabilitacja po zabiegu, z uwzględnieniem zaleceń lekarza oraz etapu powrotu do sprawności."
+    },
+    {
+      "id": "przeciazenia",
+      "icon": "target",
+      "title": "Leczenie przeciążeń narządu ruchu",
+      "description": "Pomoc przy dolegliwościach związanych z obciążeniami w pracy, sporcie i codziennym życiu. Dobór ćwiczeń i omówienie aktywności."
+    },
+    {
+      "id": "kregoslup",
+      "icon": "activity",
+      "title": "Leczenie zespołów bólowych kręgosłupa",
+      "description": "Konsultacja i fizjoterapia dla osób z bólem kręgosłupa. Rozmowa o objawach, ocena funkcjonowania i ustalenie planu postępowania."
+    },
+    {
+      "id": "konsultacja-online",
+      "icon": "video",
+      "title": "Fizjo konsultacja online",
+      "description": "Rozmowa o dolegliwościach, posiadanych badaniach i dotychczasowym leczeniu. Pomoc w ustaleniu, od czego zacząć i do jakiego specjalisty się zwrócić."
     }
   ]
 }

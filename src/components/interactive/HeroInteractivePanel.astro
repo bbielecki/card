@@ -17,12 +17,12 @@ const panels = [
     href: "#uslugi",
   },
   {
-    id: "lokalizacje",
-    label: "Gdzie przyjmuję",
-    title: locations.heading,
-    description: locations.description,
-    items: locations.items.map((item) => ({ title: item.name, description: item.address })),
-    href: "#lokalizacje",
+    id: "kontakt",
+    label: site.ui.contact,
+    title: site.contact.heading,
+    description: site.contact.description,
+    items: [],
+    href: "#kontakt",
   },
   {
     id: "rehabilitacja",
@@ -34,7 +34,7 @@ const panels = [
   },
   {
     id: consultations[0].id,
-    label: consultations[0].id === "telekonsultacja" ? "Telekonsultacja" : "Wizyta domowa",
+    label: consultations[0].label,
     title: consultations[0].heading,
     description: consultations[0].description,
     items: [],
@@ -55,14 +55,6 @@ const panels = [
     description: cooperation.description,
     items: cooperation.items,
     href: "#wspolpraca",
-  },
-  {
-    id: "kontakt",
-    label: site.ui.contact,
-    title: site.contact.heading,
-    description: site.contact.description,
-    items: [],
-    href: "#kontakt",
   },
   {
     id: "rodo",
@@ -101,38 +93,52 @@ const panels = [
       </div>
     </div>
   </div>
-  {
-    panels.map((panel, i) => (
-      <div
-        id={`panel-${panel.id}`}
-        role="tabpanel"
-        aria-labelledby={`tab-${panel.id}`}
-        tabindex="0"
-        hidden={i !== 0}
-        class="panel-content"
-      >
-        <>
-          <h2>{panel.title}</h2>
-          <p>{panel.description}</p>
-        </>
-        {panel.items.length > 0 && (
-          <ul class="panel-items">
-            {panel.items.map((item) => (
-              <li>
-                <strong>{item.title}</strong>
-                <p>{item.description}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-        {panel.id === "kontakt" && <ContactLinks compact />}
-        <a class="button" href={panel.href} data-panel-link>
-          {site.ui.details}
-          <Icon />
-        </a>
-      </div>
-    ))
-  }
+  <div class="panel-pages">
+    {
+      panels.map((panel, i) => (
+        <div
+          id={`panel-${panel.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${panel.id}`}
+          tabindex="0"
+          hidden={i !== 0}
+          class="panel-content"
+        >
+          <>
+            <h2>{panel.title}</h2>
+            <p>{panel.description}</p>
+          </>
+          {panel.items.length > 0 && (
+            <ul class="panel-items">
+              {panel.items.map((item) => (
+                <li>
+                  <strong>{item.title}</strong>
+                  <p>{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          {panel.id === "kontakt" && (
+            <div class="panel-contact-details">
+              <ul class="panel-items">
+                {locations.items.map((location) => (
+                  <li>
+                    <strong>{location.name}</strong>
+                    <p>{location.address}</p>
+                  </li>
+                ))}
+              </ul>
+              <ContactLinks compact />
+            </div>
+          )}
+          <a class="button" href={panel.href} data-panel-link>
+            {site.ui.details}
+            <Icon />
+          </a>
+        </div>
+      ))
+    }
+  </div>
 </section>
 <script>
   import "../../scripts/heroPanel";

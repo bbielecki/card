@@ -3,20 +3,17 @@
   "title": "Fizjoterapeuta",
   "isDraft": true,
   "description": "Poznaj dr. Łukasza Wilgockiego. Fizjoterapia, rehabilitacja i indywidualne podejście do powrotu do sprawności. Gabinet, telekonsultacje i wizyty domowe.",
-  "phone": "",
-  "email": "",
-  "instagramUrl": "",
+  "phone": "539 381 744",
+  "email": "bartlomiejbielecki1@gmail.com",
   "navigation": [
     { "label": "O mnie", "href": "#o-mnie" },
     { "label": "Jak pomagam", "href": "#uslugi" },
-    { "label": "Gdzie przyjmuję", "href": "#lokalizacje" }
+    { "label": "Kontakt i gabinet", "href": "#kontakt" }
   ],
   "ui": {
-    "contact": "Kontakt",
+    "contact": "Kontakt i gabinet",
     "appointment": "Umów wizytę",
-    "call": "Zadzwoń",
     "email": "Napisz wiadomość",
-    "instagram": "Instagram",
     "menu": "Menu",
     "close": "Zamknij panel",
     "skip": "Przejdź do treści",
@@ -31,8 +28,8 @@
   },
   "hero": {
     "eyebrow": "FIZJOTERAPIA Z UWAŻNOŚCIĄ",
-    "headline": ["Twój ruch.", "Twoja sprawność.", "Nasza współpraca."],
-    "intro": "Pomagam wracać do swobodnego ruchu. Z uważnością na Twoje potrzeby i planem dopasowanym do Twojej codzienności.",
+    "headline": ["Fizjoterapia.", "W gabinecie.", "Także online."],
+    "intro": "Pomagam osobom z bólem kręgosłupa i stawów, po urazach oraz przed i po operacjach. Podczas fizjo konsultacji online pomagam ustalić, od czego zacząć i jakie mogą być kolejne kroki.",
     "secondaryCta": "Poznaj moje podejście",
     "portrait": "test_image_person.jpg",
     "portraitAlt": "Mężczyzna siedzący przy stoliku",
@@ -43,12 +40,12 @@
     "revealLabel": "Otwórz menu wizytówki",
     "scrollHint": "Przewiń w dół lub kliknij pinezkę",
     "desktopScrollHint": "Przewiń w dół, aby poznać szczegóły",
-    "mapPinLabel": "Przejdź do mapy gabinetu",
+    "mapPinLabel": "Przejdź do kontaktu i gabinetu",
     "shortcuts": [
       { "id": "uslugi", "label": "Czym się zajmuję", "icon": "activity" },
-      { "id": "lokalizacje", "label": "Gdzie przyjmuję", "icon": "pin" },
+      { "id": "kontakt", "label": "Kontakt i gabinet", "icon": "pin" },
       { "id": "rehabilitacja", "label": "Rehabilitacja", "icon": "arrow" },
-      { "id": "kontakt", "label": "Porozmawiajmy", "icon": "message" }
+      { "id": "telekonsultacja", "label": "Fizjo konsultacja online", "icon": "video" }
     ]
   },
   "about": {
@@ -63,16 +60,17 @@
     "note": "Wstępny opis do akceptacji. Informacje o wykształceniu i doświadczeniu zostaną uzupełnione."
   },
   "contact": {
-    "eyebrow": "07 / KONTAKT",
-    "heading": "Zróbmy pierwszy krok.",
-    "description": "Chcesz zapytać o wizytę lub wybrać formę konsultacji? Porozmawiajmy o Twoich potrzebach.",
-    "phoneLabel": "Telefon",
-    "emailLabel": "E-mail",
-    "socialLabel": "Bądźmy w kontakcie",
+    "eyebrow": "03 / KONTAKT I GABINET",
+    "heading": "Porozmawiajmy.\nSprawdź, gdzie przyjmuję.",
+    "description": "Tutaj znajdziesz dane kontaktowe i adres gabinetu. Wybierz dogodną formę wizyty i skontaktuj się w sprawie terminu.",
+    "phoneLabel": "Rejestracja do gabinetu",
+    "phoneDescription": "Zapisy na rehabilitację i konsultacje stacjonarne. Ten numer nie służy do zapisów na konsultacje online.",
+    "emailLabel": "Fizjo konsultacja online",
+    "emailDescription": "Zgłoszenia na konsultacje online przyjmuję e-mailem, niezależnie od rejestracji do gabinetu.",
+    "emailActionLabel": "Napisz wiadomość w sprawie fizjo konsultacji online",
     "phonePending": "Numer telefonu do uzupełnienia",
     "emailPending": "Adres e-mail do uzupełnienia",
-    "socialPending": "Profil Instagram do uzupełnienia",
     "pending": "Dane kontaktowe pojawią się po potwierdzeniu przez właściciela. Umawianie wizyt nie jest jeszcze dostępne w tej wersji.",
-    "locationsLink": "Sprawdź miejsca i formy wizyt"
+    "onlineLink": "Fizjo konsultacja online"
   }
 }

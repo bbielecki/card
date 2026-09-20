@@ -14,7 +14,11 @@ const home = Astro.url.pathname === "/" ? "" : "/";
       >{site.ui.menu}<Icon name="plus" /></button
     >
     <nav id="main-navigation" aria-label="Nawigacja główna">
-      {site.navigation.map((link) => <a href={`${home}${link.href}`}>{link.label}</a>)}
+      {
+        site.navigation
+          .filter((link) => link.href !== "#kontakt")
+          .map((link) => <a href={`${home}${link.href}`}>{link.label}</a>)
+      }
       <a class="button button--small" href={`${home}#kontakt`}>{site.ui.contact}<Icon /></a>
     </nav>
   </div>

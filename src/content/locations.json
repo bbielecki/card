@@ -2,16 +2,12 @@
   "eyebrow": "03 / GDZIE PRZYJMUJĘ",
   "heading": "Wybierz przestrzeń\ndo wspólnej pracy.",
   "description": "Przyjęcia odbywają się po wcześniejszym ustaleniu terminu. Sprawdź lokalizację gabinetu i wybierz najwygodniejszą formę kontaktu.",
-  "mapLabel": "Pokaż trasę",
-  "mapPending": "Mapa będzie dostępna po potwierdzeniu adresu.",
   "items": [
     {
       "id": "gabinet",
-      "name": "Wizyta w gabinecie",
-      "address": "Centrum Medyczne Kalinowska, ul. Jana III Sobieskiego 43/U5-U6, 05-120 Legionowo",
-      "description": "Przyjęcia w gabinecie po wcześniejszym ustaleniu terminu.",
-      "googleMapsUrl": "https://maps.app.goo.gl/Hf9waqbGkkmzaj3v9",
-      "embedUrl": "https://www.google.com/maps?q=Centrum%20Medyczne%20Kalinowska%2C%20Jana%20III%20Sobieskiego%2043%2C%20Legionowo&output=embed"
+      "name": "Centrum Medyczne Kalinowska — Legionowo",
+      "address": "ul. Jana III Sobieskiego 43, 05-120 Legionowo",
+      "description": "Przyjęcia w gabinecie po wcześniejszym ustaleniu terminu."
     }
   ]
 }

@@ -3,11 +3,13 @@ import site from "../../content/site.json";
 import Icon from "./Icon.astro";
 interface Props {
   compact?: boolean;
+  channel?: "phone" | "mail";
 }
-const { compact = false } = Astro.props;
+const { compact = false, channel } = Astro.props;
 const links = [
   {
     label: site.contact.phoneLabel,
+    description: site.contact.phoneDescription,
     value: site.phone,
     href: site.phone ? `tel:${site.phone.replace(/[^+\d]/g, "")}` : "",
     pending: site.contact.phonePending,
@@ -15,42 +17,46 @@ const links = [
   },
   {
     label: site.contact.emailLabel,
+    description: site.contact.emailDescription,
     value: site.email,
     href: site.email ? `mailto:${site.email}` : "",
     pending: site.contact.emailPending,
     icon: "mail",
-  },
-  {
-    label: site.ui.instagram,
-    value: site.instagramUrl ? site.ui.instagram : "",
-    href: site.instagramUrl,
-    pending: site.contact.socialPending,
-    icon: "instagram",
   },
 ];
 ---
 
 <div class:list={["contact-links", { "contact-links--compact": compact }]}>
   {
-    links.map((link) => (
-      <div class="contact-item">
-        <Icon name={link.icon} />
-        <div>
-          <span class="contact-label">{link.label}</span>
-          {link.href ? (
-            <a
-              href={link.href}
-              target={link.icon === "instagram" ? "_blank" : undefined}
-              rel={link.icon === "instagram" ? "noopener noreferrer" : undefined}
-            >
-              {link.value}
-              <span aria-hidden="true"> ↗</span>
-            </a>
-          ) : (
-            <span class="pending-value">{link.pending}</span>
-          )}
+    links
+      .filter((link) => !channel || link.icon === channel)
+      .map((link) => (
+        <div class="contact-item">
+          <Icon name={link.icon} />
+          <div>
+            <span class="contact-label">{link.label}</span>
+            {link.href && link.icon === "phone" ? (
+              <a href={link.href} aria-label={`${link.label}: ${link.value}`}>
+                {link.value}
+              </a>
+            ) : link.href ? (
+              <span class="contact-email-value">{link.value}</span>
+            ) : (
+              <span class="pending-value">{link.pending}</span>
+            )}
+            <p class="contact-description">{link.description}</p>
+            {link.icon === "mail" && link.href && (
+              <a
+                class="button contact-email-action"
+                href={link.href}
+                aria-label={site.contact.emailActionLabel}
+              >
+                {site.ui.email}
+                <Icon name="mail" />
+              </a>
+            )}
+          </div>
         </div>
-      </div>
-    ))
+      ))
   }
 </div>

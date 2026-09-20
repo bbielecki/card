@@ -7,6 +7,7 @@ interface Props {
   consultation: (typeof consultations)[number];
 }
 const { consultation: data } = Astro.props;
+const isOnline = data.id === "telekonsultacja";
 ---
 
 <section
@@ -14,15 +15,19 @@ const { consultation: data } = Astro.props;
   class:list={[
     "section",
     "consultation-section",
-    { "section--soft": data.id === "telekonsultacja" },
+    { "section--navy": data.id === "telekonsultacja" },
   ]}
 >
   <div class="container consultation-grid">
     <div>
       <span class="icon-tile"><Icon name={data.icon} /></span><SectionHeader {...data} /><a
-        class="text-link"
-        href="#kontakt">{data.cta}<Icon /></a>
+        class:list={[isOnline ? "button" : "text-link"]}
+        href={isOnline && site.email ? `mailto:${site.email}` : "#kontakt"}
+        aria-label={isOnline && site.email ? site.contact.emailActionLabel : undefined}
+        >{isOnline && !site.email ? site.ui.contact : data.cta}<Icon /></a
+      >
     </div><div class="consultation-details">
+      {data.stepsHeading && <h3>{data.stepsHeading}</h3>}
       <ul>
         {
           data.points.map((point, i) => (

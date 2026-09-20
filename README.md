@@ -8,6 +8,12 @@ Po dotarciu do górnej krawędzi menu z logo ŁW+ zastępuje nagłówek i pozost
 
 ## Uruchomienie
 
+Etap 5: jedyna lokalizacja to Centrum Medyczne Kalinowska — Legionowo, ul. Jana III Sobieskiego 43, 05-120 Legionowo. Dane edytuje się w `src/content/locations.json`. Sekcja nie zawiera mapy Google, odnośnika do mapy ani godzin przyjęć. Pinezka prowadzi do wspólnej sekcji „Kontakt i gabinet”.
+
+Kontakt po etapie 4: pole `phone` w `src/content/site.json` zawiera numer rejestracji do gabinetu (539 381 744), a `email` służy do zgłoszeń na konsultacje online. Numer jest zwykłym odnośnikiem telefonicznym, bez przycisku „Zadzwoń”. Przyciski „Napisz wiadomość” w sekcji kontaktu, podglądzie menu i mobilnym pasku kierują na skonfigurowany adres e-mail. Instagram nie jest wyświetlany.
+
+Adres kontaktowy do testów jest ustawiony w `src/content/site.json`, w polu `email`: `bartlomiejbielecki1@gmail.com`. Komponenty kontaktu pobierają go z tego jednego miejsca. Przed publikacją należy zastąpić go docelowym adresem klienta i ponownie zbudować stronę. Link `mailto:` otwiera program pocztowy użytkownika; aplikacja nie wysyła wiadomości samodzielnie.
+
 Node.js >=22.19.0 (zalecany zgodny LTS).
 
 ```sh

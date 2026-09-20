@@ -32,7 +32,10 @@ if (hero && panel) {
     contents.forEach((content) => {
       content.hidden = content.id !== "panel-" + id;
     });
-    if (root.classList.contains("menu-docked") && panel.getBoundingClientRect().top < 0) {
+    if (
+      root.classList.contains("menu-docked") &&
+      panel.getBoundingClientRect().bottom <= menuBar.offsetHeight
+    ) {
       const { start, distance, headerHeight } = geometry();
       window.scrollTo({ top: start + distance + headerHeight, behavior: "instant" });
     }
@@ -82,7 +85,10 @@ if (hero && panel) {
     hero.style.setProperty("--hero-scene-height", sceneHeight + "px");
     hero.style.setProperty("--hero-progress", String(progress));
     panel.hidden = progress <= 0.002;
-    if (!panel.hidden) hero.style.setProperty("--hero-menu-height", menuBar.offsetHeight + "px");
+    if (!panel.hidden) {
+      hero.style.setProperty("--hero-menu-height", menuBar.offsetHeight + "px");
+      hero.style.setProperty("--hero-panel-height", panel.offsetHeight + "px");
+    }
     main.inert = progress >= 0.99;
     hero.classList.toggle("is-menu-revealed", !panel.hidden);
     root.classList.toggle("hero-revealed", !panel.hidden);

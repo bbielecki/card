@@ -3,16 +3,6 @@ import AxeBuilder from "@axe-core/playwright";
 import site from "../src/content/site.json" with { type: "json" };
 import locations from "../src/content/locations.json" with { type: "json" };
 
-// Exercise our iframe integration without depending on Google's network or UI.
-test.beforeEach(async ({ page }) => {
-  await page.route("https://www.google.com/maps**", (route) =>
-    route.fulfill({
-      contentType: "text/html",
-      body: '<!doctype html><html lang="pl"><head><title>Mapa gabinetu</title></head><body></body></html>',
-    })
-  );
-});
-
 for (const width of [360, 390, 430, 768, 1024, 1440]) {
   test(`strona i dostępność przy szerokości ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -26,7 +16,6 @@ for (const width of [360, 390, 430, 768, 1024, 1440]) {
       "o-mnie",
       "uslugi",
       "rehabilitacja",
-      "lokalizacje",
       "telekonsultacja",
       "wizyta-domowa",
       "wspolpraca",
@@ -77,6 +66,21 @@ test("linki, brak fikcyjnych danych i metadane", async ({ page, request }) => {
   await expect(page).toHaveTitle(/Łukasz Wilgocki/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Fizjoterapia/);
   await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
+  await expect(page.getByText(/Instagram/)).toHaveCount(0);
+  await expect(page.locator('a.button[href^="tel:"]')).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Zadzwoń", exact: true })).toHaveCount(0);
+  await expect(page.locator('#kontakt a[href^="tel:"]')).toHaveAttribute(
+    "aria-label",
+    `${site.contact.phoneLabel}: ${site.phone}`
+  );
+  await expect(page.locator('#kontakt a[href^="mailto:"]')).toHaveText(site.ui.email);
+  await expect(page.locator(".mobile-cta .button")).toHaveAttribute("href", `mailto:${site.email}`);
+  await expect(page.locator('#telekonsultacja a[href^="mailto:"]')).toHaveAttribute(
+    "href",
+    `mailto:${site.email}`
+  );
+  await expect(page.locator("#telekonsultacja .consultation-details li")).toHaveCount(3);
+  await expect(page.locator("#tab-telekonsultacja")).toHaveText("Fizjo konsultacja online");
   await expect(
     page.locator('a[href="tel:"], a[href="mailto:"], a[href="#"], a[href=""]')
   ).toHaveCount(0);
@@ -93,13 +97,14 @@ test("linki, brak fikcyjnych danych i metadane", async ({ page, request }) => {
       `mailto:${site.email}`
     );
   for (const location of locations.items) {
-    if (location.googleMapsUrl)
-      await expect(page.getByRole("link", { name: locations.mapLabel })).toHaveAttribute(
-        "href",
-        location.googleMapsUrl
-      );
-    else await expect(page.getByText(locations.mapPending)).toBeVisible();
+    await expect(page.locator("#kontakt .location-card")).toContainText(location.name);
+    await expect(page.locator("#kontakt .location-card")).toContainText(location.address);
   }
+  await expect(
+    page.locator(
+      'iframe, a[href*="maps.google"], a[href*="google.com/maps"], a[href*="maps.app.goo.gl"]'
+    )
+  ).toHaveCount(0);
   const brokenAnchors = await page
     .locator('a[href^="#"]')
     .evaluateAll((links) =>
@@ -166,8 +171,11 @@ test("ograniczenie animacji jest respektowane", async ({ page }) => {
 
 for (const width of [390, 1440]) {
   test(`aktywna zakładka śledzi sekcje przy scrollu: ${width}px`, async ({ page }) => {
+    // Finish anchor navigation immediately before measuring scroll stability.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#rehabilitacja");
+    await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("#tab-rehabilitacja")).toHaveAttribute("aria-current", "location");
     const order = await page.locator("[data-panel-tab]").evaluateAll((tabs) => {
       const menu = tabs
@@ -183,7 +191,7 @@ for (const width of [390, 1440]) {
     await brand.focus();
     for (const id of [
       "uslugi",
-      "lokalizacje",
+      "kontakt",
       "rehabilitacja",
       "telekonsultacja",
       "wspolpraca",
@@ -202,7 +210,8 @@ for (const width of [390, 1440]) {
       await expect(page.locator('.panel-tabs [aria-current="location"]')).toHaveCount(1);
       await expect(active).toBeInViewport();
       await expect(brand).toBeFocused();
-      expect(await page.evaluate(() => scrollY)).toBeCloseTo(position, 0);
+      // Allow pixel rounding while still detecting an unwanted navigation jump.
+      expect(Math.abs((await page.evaluate(() => scrollY)) - position)).toBeLessThanOrEqual(2);
     }
     await page.locator("#tab-uslugi").click();
     await expect(page.locator("#panel-uslugi")).toBeInViewport();
@@ -236,12 +245,26 @@ for (const width of [390, 1440]) {
     await expect(page.locator(".site-header")).toBeHidden();
     await expect(page.locator(".hero-menu-brand")).toBeVisible();
     expect((await page.locator(".hero-menu-bar").boundingBox())!.y).toBe(0);
-    await expect(panel.getByRole("tab")).toHaveCount(7);
+    await expect(panel.getByRole("tab")).toHaveCount(6);
     await expect(page.locator("#main-navigation")).toBeHidden();
     await expect(page.locator("[data-panel-close]")).toBeHidden();
+    const layout = await page.evaluate(() => ({
+      panelHeight: document.getElementById("hero-panel")!.getBoundingClientRect().height,
+      nextSection: document.getElementById("o-mnie")!.getBoundingClientRect().top + scrollY,
+      scroll: scrollY,
+    }));
     for (const tab of await panel.getByRole("tab").all()) {
       await tab.click();
       await expect(tab).toHaveAttribute("aria-selected", "true");
+      const current = await page.evaluate(() => ({
+        panelHeight: document.getElementById("hero-panel")!.getBoundingClientRect().height,
+        nextSection: document.getElementById("o-mnie")!.getBoundingClientRect().top + scrollY,
+        scroll: scrollY,
+      }));
+      expect(current.panelHeight).toBeCloseTo(layout.panelHeight, 0);
+      expect(current.nextSection).toBeCloseTo(layout.nextSection, 0);
+      expect(current.scroll).toBeCloseTo(layout.scroll, 0);
+      await expect(panel.getByRole("tabpanel")).toHaveCount(1);
       expect(
         (await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze())
           .violations
@@ -249,7 +272,7 @@ for (const width of [390, 1440]) {
     }
     await page.locator("#tab-uslugi").focus();
     await page.keyboard.press("ArrowRight");
-    await expect(page.locator("#panel-lokalizacje")).toBeVisible();
+    await expect(page.locator("#panel-kontakt")).toBeVisible();
     await page.keyboard.press("End");
     await expect(page.locator("#panel-rodo")).toBeVisible();
     await page.screenshot({ path: `test-results/menu-docked-${width}.png` });
@@ -267,24 +290,30 @@ for (const width of [390, 1440]) {
   });
 }
 
-test("desktop: pinezka prowadzi do mapy, a przyciski obok niej są zwarte", async ({ page }) => {
+test("desktop: kontakt rozdziela gabinet i konsultacje online", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   const mapPin = page.getByRole("link", { name: site.hero.mapPinLabel });
   await expect(mapPin).toBeInViewport();
-  await expect(mapPin).toHaveAttribute("href", "#lokalizacje");
+  await expect(mapPin).toHaveAttribute("href", "#kontakt");
   await mapPin.click();
-  await expect(page).toHaveURL(/#lokalizacje$/);
-  await expect(page.locator("#lokalizacje")).toBeInViewport();
-  const map = page.locator(".location-map");
-  await expect(map.locator("iframe")).toHaveAttribute("src", locations.items[0].embedUrl);
-  const links = page.locator(".location-alternatives > a");
-  for (const link of await links.all()) {
-    const bounds = (await link.boundingBox())!;
-    expect(bounds.height).toBeGreaterThanOrEqual(44);
-    expect(bounds.height).toBeLessThanOrEqual(140);
-  }
-  expect((await links.first().boundingBox())!.x).toBeGreaterThan((await map.boundingBox())!.x);
+  await expect(page).toHaveURL(/#kontakt$/);
+  await expect(page.locator("#kontakt")).toBeInViewport();
+  await expect(page.locator("section#kontakt")).toHaveCount(1);
+  await expect(page.locator("section#lokalizacje, #tab-lokalizacje")).toHaveCount(0);
+  await expect(page.locator('#kontakt a[href^="mailto:"]')).toHaveAttribute(
+    "href",
+    `mailto:${site.email}`
+  );
+  await expect(page.locator("#kontakt #lokalizacje")).toHaveCount(1);
+  const locationCard = page.locator(".location-card");
+  const online = page.locator(".location-online");
+  await expect(locationCard.locator('a[href^="tel:"]')).toHaveCount(1);
+  await expect(online.locator('a[href^="mailto:"]')).toHaveCount(1);
+  await expect(
+    page.locator('#kontakt a[href="#telekonsultacja"], #kontakt a[href="#wizyta-domowa"]')
+  ).toHaveCount(0);
+  expect((await online.boundingBox())!.x).toBeGreaterThan((await locationCard.boundingBox())!.x);
   await page.screenshot({ path: "test-results/desktop-location-layout.png" });
 });
 

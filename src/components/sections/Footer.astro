@@ -25,14 +25,15 @@ const isHome = Astro.url.pathname === "/";
       <>
         <a
           class="button"
-          href={site.phone ? `tel:${site.phone.replace(/[^+\d]/g, "")}` : "#kontakt"}
+          href={site.email ? `mailto:${site.email}` : "#kontakt"}
+          aria-label={site.email ? site.contact.emailActionLabel : site.ui.contact}
         >
-          <Icon name={site.phone ? "phone" : "message"} />
-          {site.phone ? site.ui.call : site.ui.contact}
+          <Icon name="mail" />
+          {site.email ? site.ui.email : site.ui.contact}
         </a>
-        <a href="#lokalizacje">
-          <Icon name="pin" />
-          {site.navigation[2].label}
+        <a href="#telekonsultacja">
+          <Icon name="video" />
+          {site.contact.onlineLink}
         </a>
       </>
     </div>

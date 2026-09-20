@@ -9,7 +9,7 @@ Treść polityki prywatności / klauzuli RODO do uzupełnienia i akceptacji prze
 
 ## Obecna wersja strony
 
-Strona nie zawiera formularza kontaktowego, kont pacjentów, płatności ani narzędzi analitycznych. Czcionki i grafiki są serwowane lokalnie. Mapa, jeśli zostanie skonfigurowana, otwiera się jako zewnętrzny link.
+Strona nie zawiera formularza kontaktowego, kont pacjentów, płatności, map Google ani narzędzi analitycznych. Czcionki i grafiki są serwowane lokalnie.
 
 ## Informacje do uzupełnienia przed publikacją
 
