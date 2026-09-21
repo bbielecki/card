@@ -18,7 +18,17 @@ if (hero && panel) {
   let focusMenu = false;
   let framePending = false;
 
-  const select = (id: string, focus = false) => {
+  const scrollToMenu = () => {
+    const { start, distance, headerHeight } = geometry();
+    window.scrollTo({
+      top: start + distance + headerHeight + 1,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  };
+
+  const select = (id: string, focus = false, reveal = true) => {
     tabs.forEach((tab) => {
       const active = tab.dataset.panelTab === id;
       tab.setAttribute("aria-selected", String(active));
@@ -32,13 +42,7 @@ if (hero && panel) {
     contents.forEach((content) => {
       content.hidden = content.id !== "panel-" + id;
     });
-    if (
-      root.classList.contains("menu-docked") &&
-      panel.getBoundingClientRect().bottom <= menuBar.offsetHeight
-    ) {
-      const { start, distance, headerHeight } = geometry();
-      window.scrollTo({ top: start + distance + headerHeight, behavior: "instant" });
-    }
+    if (reveal) scrollToMenu();
   };
 
   const geometry = () => {
@@ -107,15 +111,9 @@ if (hero && panel) {
   hero.querySelectorAll<HTMLAnchorElement>("[data-hero-menu]").forEach((trigger) =>
     trigger.addEventListener("click", (event) => {
       event.preventDefault();
-      if (trigger.dataset.heroMenu) select(trigger.dataset.heroMenu);
-      const { start, distance, headerHeight } = geometry();
+      if (trigger.dataset.heroMenu) select(trigger.dataset.heroMenu, false, false);
       focusMenu = true;
-      window.scrollTo({
-        top: start + distance + headerHeight + 1,
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "instant"
-          : "smooth",
-      });
+      scrollToMenu();
     })
   );
 

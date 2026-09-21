@@ -2,7 +2,7 @@
 
 Statyczne MVP w Astro + TypeScript + SCSS. Jedna strona z sekcjami, interaktywnym hero na desktopie, mobilną nawigacją i podstroną RODO.
 
-Na wszystkich ekranach przewijanie zmniejsza i przygasza zdjęcie, pozostawiając je w tle menu odsłanianego gradientem. Pinezka również otwiera menu z sześcioma zakładkami. Zdjęcie na desktopie zajmuje 75% szerokości układu. Powrót na górę przywraca pełne zdjęcie. Bez JavaScript pinezka prowadzi do skrótów nawigacyjnych.
+Na wszystkich ekranach przewijanie zmniejsza i przygasza zdjęcie, pozostawiając je w tle menu odsłanianego gradientem. Pinezka otwiera menu na pierwszej zakładce: Kontakt i gabinet. Menu zawiera sześć zakładek. Zdjęcie na desktopie zajmuje 75% szerokości układu. Powrót na górę przywraca pełne zdjęcie. Bez JavaScript pinezka prowadzi bezpośrednio do kontaktu.
 
 Po dotarciu do górnej krawędzi menu z logo ŁW+ zastępuje nagłówek i pozostaje widoczne podczas dalszego przewijania.
 
@@ -56,6 +56,6 @@ Testy obejmują 360/390/430/768/1024/1440 px, brak przewijania poziomego, axe WC
 
 Netlify: gotowy `netlify.toml`, output `dist`. Cloudflare Pages: build `npm run check && npm run build`, output `dist`. Bez adaptera i przekierowania SPA.
 
-Po potwierdzeniu treści ustaw `isDraft: false` i zmienną `SITE_URL` na finalny adres HTTPS. Bez domeny lub w trybie roboczym indeksowanie jest wyłączone. Żadna domena ani publiczny hosting nie zostały skonfigurowane w ramach lokalnego MVP.
+Po potwierdzeniu treści ustaw `isDraft: false`. Domyślna domena w konfiguracji to `https://drlukaszwilgocki.pl`; `SITE_URL` pozwala ją nadpisać. W trybie roboczym indeksowanie jest wyłączone przez `noindex`, a sitemap pozostaje pusta. DNS ani publiczny hosting nie zostały skonfigurowane w ramach lokalnego MVP. Zakres SEO i kroki publikacji: [docs/10-seo.md](docs/10-seo.md).
 
 Dokumenty: [kierunek UI](docs/03-ux-ui.md), [przekazanie](docs/07-handover.md), [utrzymanie](docs/08-maintenance.md), [raport QA](docs/09-qa-report.md).

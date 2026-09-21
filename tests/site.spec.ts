@@ -121,7 +121,8 @@ test("linki, brak fikcyjnych danych i metadane", async ({ page, request }) => {
       "content",
       "noindex, nofollow"
     );
-    expect(await (await request.get("/robots.txt")).text()).toContain("Disallow: /");
+    expect(await (await request.get("/robots.txt")).text()).toContain("Allow: /");
+    expect(await (await request.get("/sitemap.xml")).text()).not.toContain("<loc>");
   }
   await page
     .locator("footer")
@@ -136,6 +137,31 @@ test("linki, brak fikcyjnych danych i metadane", async ({ page, request }) => {
   ).toEqual([]);
   const missing = await request.get("/nieistniejaca-strona/");
   expect(missing.status()).toBe(404);
+});
+
+test("SEO: lokalizacja, canonical, graf osoby i dostępny obraz udostępniania", async ({ page, request }) => {
+  await page.goto("/?utm_source=test");
+  await expect(page).toHaveTitle(site.seoTitle);
+  await expect(page.locator("h1")).toHaveText(`${site.name} / ${site.title}`);
+  await expect(page.locator(".hero-intro")).toContainText("pacjentów z Legionowa i Warszawy");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", site.description);
+  const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+  expect(new URL(canonical!).pathname).toBe("/");
+  expect(new URL(canonical!).search).toBe("");
+  const image = new URL((await page.locator('meta[property="og:image"]').getAttribute("content"))!);
+  const response = await request.get(image.pathname);
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"]).toContain("image/png");
+  const schema = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent())!);
+  const person = schema["@graph"].find((entry: { "@type": string }) => entry["@type"] === "Person");
+  expect(person.jobTitle).toBe(site.title);
+  expect(person.workLocation[0].address).toBe(locations.items[0].address);
+  const service = schema["@graph"].find((entry: { "@type": string }) => entry["@type"] === "Service");
+  expect(service.areaServed.map((area: { name: string }) => area.name)).toEqual(["Legionowo", "Warszawa"]);
+  expect(person.workLocation).toHaveLength(1);
+  expect(JSON.stringify(schema)).not.toContain(site.email);
+  await page.goto("/rodo/");
+  await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
 });
 
 test("bez JavaScriptu treść i nawigacja pozostają dostępne", async ({ browser }) => {
@@ -255,6 +281,12 @@ for (const width of [390, 1440]) {
     await expect(panel.getByRole("tab")).toHaveCount(6);
     await expect(page.locator("#main-navigation")).toBeHidden();
     await expect(page.locator("[data-panel-close]")).toBeHidden();
+    await panel.getByRole("tab").first().click();
+    await expect.poll(async () => Math.abs(await page.evaluate(() => {
+      const headerHeight = document.querySelector(".site-header")!.getBoundingClientRect().height;
+      const heroTop = document.querySelector(".hero")!.getBoundingClientRect().top + scrollY;
+      return scrollY - (heroTop + Math.max(620, innerHeight - headerHeight) * 0.85 + 1);
+    }))).toBeLessThanOrEqual(1);
     const layout = await page.evaluate(() => ({
       panelHeight: document.getElementById("hero-panel")!.getBoundingClientRect().height,
       nextSection: document.getElementById("o-mnie")!.getBoundingClientRect().top + scrollY,
@@ -282,6 +314,22 @@ for (const width of [390, 1440]) {
     await expect(page.locator("#panel-kontakt")).toBeVisible();
     await page.keyboard.press("End");
     await expect(page.locator("#panel-rodo")).toBeVisible();
+    // Reproduce a partly visible panel just before the About section, then
+    // reselect the same tab as well as a different one from the fixed menu.
+    for (const id of ["rodo", "kontakt"]) {
+      await page.evaluate(() => {
+        const about = document.getElementById("o-mnie")!;
+        window.scrollTo({ top: about.getBoundingClientRect().top + scrollY - 250, behavior: "instant" });
+      });
+      await page.locator(`#tab-${id}`).click();
+      await expect.poll(async () => Math.abs((await page.evaluate(() => scrollY)) - layout.scroll))
+        .toBeLessThanOrEqual(1);
+      const heading = page.locator(`#panel-${id} h2`);
+      await expect(heading).toBeInViewport();
+      expect((await heading.boundingBox())!.y).toBeGreaterThanOrEqual(
+        (await page.locator(".hero-menu-bar").boundingBox())!.height
+      );
+    }
     await page.screenshot({ path: `test-results/menu-docked-${width}.png` });
     await page.evaluate(() =>
       document.querySelector("#kontakt")!.scrollIntoView({ behavior: "instant" })

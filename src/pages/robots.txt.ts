@@ -6,7 +6,7 @@ export const GET: APIRoute = ({ site: origin }) => {
   return new Response(
     published
       ? `User-agent: *\nAllow: /\n\nSitemap: ${new URL("/sitemap.xml", origin)}\n`
-      : "User-agent: *\nDisallow: /\n",
+      : "User-agent: *\nAllow: /\n",
     { headers: { "Content-Type": "text/plain; charset=utf-8" } }
   );
 };

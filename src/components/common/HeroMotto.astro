@@ -1,0 +1,15 @@
+---
+import site from "../../content/site.json";
+---
+
+<p class="hero-motto">
+  <span class="motto-terms">
+    {site.hero.captionTerms.map((term, index) => (
+      <>
+        {index > 0 && <span class="motto-plus">+</span>}
+        <span>{term}</span>
+      </>
+    ))}
+  </span>
+  <span class="motto-result"><span class="motto-arrow">→</span><b>{site.hero.eyebrow}</b></span>
+</p>

@@ -331,13 +331,14 @@ svg {
   font-weight: 400;
   font-size: 11px;
 }
-.hero h1 {
+.hero .hero-headline {
+  font-weight: 600;
   font-size: clamp(40px, 4.1vw, 59px);
   letter-spacing: -0.045em;
   word-spacing: 0.025em;
   line-height: 1.13;
 }
-.hero h1 > span {
+.hero .hero-headline > span {
   display: block;
 }
 .text-accent {
@@ -1132,7 +1133,7 @@ svg {
   .hero-visual {
     height: 460px;
   }
-  .hero h1 {
+  .hero .hero-headline {
     font-size: 43px;
   }
   .hero-name > span {
@@ -1267,7 +1268,7 @@ svg {
     display: inline;
     font-size: 10px;
   }
-  .hero h1 {
+  .hero .hero-headline {
     font-size: clamp(38px, 8.5vw, 57px);
   }
   .hero-intro {

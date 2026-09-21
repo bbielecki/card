@@ -3,21 +3,22 @@ import site from "../../content/site.json";
 import Icon from "../common/Icon.astro";
 import Photo from "../common/Photo.astro";
 import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
+import HeroMotto from "../common/HeroMotto.astro";
 ---
 
 <section class="hero" aria-labelledby="hero-title" id="start">
   <div class="hero-stage">
     <div class="container hero-main">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span>{site.hero.eyebrow}</p>
-        <p class="hero-name">{site.name} <span>/ {site.title}</span></p>
-        <h1 id="hero-title">
+        <h1 id="hero-title" class="hero-name">{site.name} <span>/ {site.title}</span></h1>
+        <div class="hero-mobile-motto"><HeroMotto /></div>
+        <p class="hero-headline">
           {
             site.hero.headline.map((line, i) => (
               <span class:list={{ "text-accent": i === 2 }}>{line}</span>
             ))
           }
-        </h1>
+        </p>
         <p class="hero-intro">{site.hero.intro}</p>
         <div class="hero-actions">
           <a class="button" href="#kontakt">{site.ui.appointment}<Icon /></a><a
@@ -90,8 +91,9 @@ import HeroInteractivePanel from "../interactive/HeroInteractivePanel.astro";
           ><Icon name="pin" /></a
         >
         <div class="portrait-caption">
-          <span class="caption-cross" aria-hidden="true">+</span><div>
-            <strong>{site.name}</strong><span>{site.hero.caption}</span>
+          <div>
+            <strong>{site.name}</strong>
+            <HeroMotto />
           </div>
         </div>
         <span class="visual-label" aria-hidden="true">FIZJOTERAPIA & REHABILITACJA</span>
